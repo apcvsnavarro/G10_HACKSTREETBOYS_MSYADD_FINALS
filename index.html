@@ -109,4 +109,24 @@ function validateLogin() {
 </script>
 
 </body>
+
+function validateLogin() {
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const errorMsg = document.getElementById('errorMsg');
+
+  const validUsername = 'auditor';
+  const validPassword = 'Audit1234';
+
+  if (username === validUsername && password === validPassword) {
+    alert('Login successful!');
+    // Redirect to main page after successful login
+    window.location.href = 'main.html';
+    return false;  // Prevent actual form submission
+  } else {
+    errorMsg.textContent = 'Invalid username or password. Please try again.';
+    return false;  // Prevent form submission
+  }
+}
+
 </html>
