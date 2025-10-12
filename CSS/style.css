@@ -1,4 +1,3 @@
-/* Style for the whole page */
 body {
   font-family: Arial, sans-serif;
   background: #f0f2f5;
@@ -9,65 +8,11 @@ body {
   margin: 0;
 }
 
-/* Container for login form */
 .login-container {
   background: white;
-  padding: 30px 40px;
+  padding: 30px;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  width: 320px;
+  width: 300px;
   text-align: center;
-}
-
-/* Title styling */
-.login-container h2 {
-  margin-bottom: 24px;
-  color: #333;
-}
-
-/* Style for form labels */
-.login-container label {
-  display: block;
-  text-align: left;
-  margin-bottom: 8px;
-  font-weight: bold;
-  color: #555;
-}
-
-/* Style for input fields */
-.login-container input[type="text"],
-.login-container input[type="password"] {
-  width: 100%;
-  padding: 10px 12px;
-  margin-bottom: 20px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-size: 16px;
-}
-
-/* Focused input fields */
-.login-container input[type="text"]:focus,
-.login-container input[type="password"]:focus {
-  border-color: #007bff;
-  outline: none;
-}
-
-/* Style for login button */
-.login-container button {
-  width: 100%;
-  padding: 12px;
-  font-size: 18px;
-  font-weight: bold;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-/* Button hover effect */
-.login-container button:hover {
-  background-color: #0056b3;
 }
