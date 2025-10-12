@@ -3,68 +3,112 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>AuditPro - Auditing Services</title>
+<title>AuditPro - Login</title>
 <link rel="stylesheet" href="style.css" />
+<style>
+  /* Additional styles for login form */
+  body {
+    background: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  .login-container {
+    background: white;
+    padding: 40px 50px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 320px;
+    text-align: center;
+  }
+  .login-container h2 {
+    margin-bottom: 25px;
+    color: #013a63;
+  }
+  .login-container label {
+    display: block;
+    text-align: left;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+  }
+  .login-container input[type="text"],
+  .login-container input[type="password"] {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  .login-container input[type="text"]:focus,
+  .login-container input[type="password"]:focus {
+    border-color: #013a63;
+    outline: none;
+  }
+  .login-container button {
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #013a63;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .login-container button:hover {
+    background-color: #025a9e;
+  }
+  .error-message {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+</style>
 </head>
 <body>
 
-<header>
-  <div class="container">
-    <h1>AuditPro</h1>
-    <nav>
-      <ul>
-        <li><a href="#about">About</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
+<div class="login-container">
+  <h2>Login to AuditPro</h2>
+  <form id="loginForm" onsubmit="return validateLogin()">
+    <div class="error-message" id="errorMsg"></div>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required />
 
-<section id="hero">
-  <div class="container">
-    <h2>Trusted Auditing Services for Your Business</h2>
-    <p>Ensuring financial accuracy and compliance with professional auditing expertise.</p>
-  </div>
-</section>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required />
 
-<section id="about" class="container">
-  <h2>About Us</h2>
-  <p>AuditPro has been delivering top-tier auditing and consulting services for over 20 years, helping companies maintain transparency, accuracy, and regulatory compliance.</p>
-</section>
-
-<section id="services" class="container">
-  <h2>Our Services</h2>
-  <ul>
-    <li>Financial Statement Audits</li>
-    <li>Internal Control Assessments</li>
-    <li>Compliance Audits</li>
-    <li>Risk Management Consulting</li>
-    <li>Forensic Auditing</li>
-  </ul>
-</section>
-
-<section id="contact" class="container">
-  <h2>Contact Us</h2>
-  <form>
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" required />
-
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" required />
-
-    <label for="message">Message</label>
-    <textarea id="message" name="message" rows="5" required></textarea>
-
-    <button type="submit">Send Message</button>
+    <button type="submit">Log In</button>
   </form>
-</section>
+</div>
 
-<footer>
-  <div class="container">
-    <p>&copy; 2025 AuditPro. All rights reserved.</p>
-  </div>
-</footer>
+<script>
+function validateLogin() {
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const errorMsg = document.getElementById('errorMsg');
+
+  // Example credentials for demo purpose
+  const validUsername = 'auditor';
+  const validPassword = 'Audit1234';
+
+  if (username === validUsername && password === validPassword) {
+    alert('Login successful!');
+    // Redirect to main website page after login success
+    window.location.href = 'index.html';
+    return false; // Prevent form from submitting and refreshing page
+  } else {
+    errorMsg.textContent = 'Invalid username or password. Please try again.';
+    return false; // Prevent form submission
+  }
+}
+</script>
 
 </body>
 </html>
