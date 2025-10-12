@@ -77,14 +77,10 @@
 <div class="login-container">
   <h2>Login to ODCC</h2>
   <form id="loginForm" onsubmit="return validateLogin()">
-    <div class="error-message" id="errorMsg"></div>
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required />
-
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required />
-
-    <button type="submit">Log In</button>
+  <!-- form inputs here -->
+  <input type="text" id="username" name="username" required />
+  <input type="password" id="password" name="password" required />
+  <button type="submit">Log In</button>
   </form>
 </div>
 
@@ -94,29 +90,8 @@ function validateLogin() {
   const password = document.getElementById('password').value.trim();
   const errorMsg = document.getElementById('errorMsg');
 
-  const validUsername = 'auditor';
-  const validPassword = 'Audit1234';
-
-  if (username === validUsername && password === validPassword) {
-    alert('Login successful!');
-    window.location.href = 'main.html';  // Redirect to main page
-    return false;
-  } else {
-    errorMsg.textContent = 'Invalid username or password. Please try again.';
-    return false;
-  }
-}
-</script>
-
-</body>
-
-function validateLogin() {
-  const username = document.getElementById('username').value.trim();
-  const password = document.getElementById('password').value.trim();
-  const errorMsg = document.getElementById('errorMsg');
-
-  const validUsername = 'auditor';
-  const validPassword = 'Audit1234';
+  const validUsername = 'admin';
+  const validPassword = '1234';
 
   if (username === validUsername && password === validPassword) {
     alert('Login successful!');
@@ -128,5 +103,10 @@ function validateLogin() {
     return false;  // Prevent form submission
   }
 }
+</script>
+
+</body>
+
+
 
 </html>
