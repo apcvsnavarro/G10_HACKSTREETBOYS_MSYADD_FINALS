@@ -6,7 +6,7 @@
 <title>ODCC - Login</title>
 <link rel="stylesheet" href="style.css" />
 <style>
-  /* Additional styles for login form */
+  /* Additional login page styles */
   body {
     background: #f0f2f5;
     display: flex;
@@ -94,18 +94,16 @@ function validateLogin() {
   const password = document.getElementById('password').value.trim();
   const errorMsg = document.getElementById('errorMsg');
 
-  // Example credentials for demo purpose
-  const validUsername = 'admin';
-  const validPassword = '1234';
+  const validUsername = 'auditor';
+  const validPassword = 'Audit1234';
 
   if (username === validUsername && password === validPassword) {
     alert('Login successful!');
-    // Redirect to main website page after login success
-    window.location.href = 'index.html';
-    return false; // Prevent form from submitting and refreshing page
+    window.location.href = 'main.html';  // Redirect to main page
+    return false;
   } else {
     errorMsg.textContent = 'Invalid username or password. Please try again.';
-    return false; // Prevent form submission
+    return false;
   }
 }
 </script>
