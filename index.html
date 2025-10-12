@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>My Portfolio</title>
-<link rel="stylesheet" href="styles.css">
+<title>Login</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Welcome to My Site!</h1>
-<p>This is hosted on GitHub Pages.</p>
+<div class="login-container">
+<h2>Login</h2>
+<form id="loginForm" onsubmit="return validateLogin()">
+  <label for="username">Username:</label>
+  <input type="text" id="username" name="username" required>
+  <label for="password">Password:</label>
+  <input type="password" id="password" name="password" required>
+  <button type="submit">Log In</button>
+</form>
+</div>
+<script src="script.js"></script>
 </body>
 </html>
