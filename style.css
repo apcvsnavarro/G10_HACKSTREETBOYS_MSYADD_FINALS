@@ -1,155 +1,240 @@
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(120deg, #e0eaff 0%, #f0f8fb 100%);
-  display: flex;
-  height: 100vh;
-}
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(120deg, #e0eaff 0%, #f0f8fb 100%);
+      display: flex;
+      height: 100vh;
+    }
+    .sidebar {
+      width: 210px;
+      background-color: #39408a;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      padding: 22px 10px;
+      min-height: 100vh;
+    }
 
-.sidebar {
-  width: 210px;
-  background-color: #39408a;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  padding: 22px 10px;
-  min-height: 100vh;
-}
+    .sidebar .logo img {
+      max-width: 100%;
+      max-height: 80px;
+      display: block;
+      margin-bottom: 60px;
+      border-radius: 10px;
+      object-fit: contain;
+    }
 
-.sidebar .logo img {
-  max-width: 100%;
-  max-height: 80px;
-  display: block;
-  margin-bottom: 60px;
-  border-radius: 10px;
-  object-fit: contain;
-}
-
-.sidebar nav a {
-  color: #a3afde;
-  text-decoration: none;
-  padding: 15px 12px;
-  display: block;
-  border-radius: 12px;
-  margin-bottom: 12px;
-  font-weight: 700;
-  font-size: 17px;
-  transition: background 0.25s;
-}
-
-.sidebar nav a.active,
-.sidebar nav a:hover {
-  background-color: #6271d4;
-  color: white;
-}
-
-.main-content {
-  flex: 1;
-  background: none;
-  padding: 38px 50px 28px 50px;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  overflow-y: auto;
-  color: #344080;
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #f3f6fc;
-  padding: 10px 26px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgb(35 56 111 / 5%);
-  min-height: 83px;
-}
-
-.header h1 {
-  font-weight: 900;
-  font-size: 22px;
-  color: #39408a;
-}
-
-.header .second {
-  font-weight: 700;
-  font-size: 18px;
-  color: #6271d4;
-}
-
-.card-body {
-  padding-top: 35px;
-}
-
-.card {
-  background: #ffffff;
-  border-radius: 15px;
-  box-shadow: 0 3px 12px rgb(101 101 101 / 10%);
-  padding: 30px 30px 20px 30px;
-  margin-bottom: 20px;
-}
-
-h3 {
-  font-weight: 800;
-  font-size: 20px;
-  margin-bottom: 15px;
-  color: #455a87;
-}
-
-h4 {
-  font-weight: 700;
-  font-size: 16px;
-  margin-bottom: 8px;
-  color: #455a87;
-}
-
-p {
-  font-weight: 500;
-  font-size: 15px;
-  color: #5b6598;
-}
-
-.balance {
-  font-weight: 900;
-  font-size: 24px;
-  color: #344080;
-  margin-bottom: 15px;
-}
-
-.stats {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.stats .stat {
-  flex: 1;
-  text-align: center;
-}
-
-.stats .stat:not(:last-child) {
-  border-right: 1px solid #e1e5ee;
-}
-
-.stats .stat h5 {
-  font-size: 16px;
-  color: #6271d4;
-  margin-bottom: 5px;
-}
-
-.stats .stat p {
-  font-weight: 600;
-  font-size: 18px;
-  color: #344080;
-}
-
-footer {
-  margin-top: auto;
-  padding: 20px 50px;
-  font-size: 14px;
-  text-align: center;
-  color: #6271d4;
-  background: #f3f6fc;
-  border-top: 1px solid #e1e5ee;
-  border-radius: 0 0 15px 15px;
-}
+    .sidebar nav a {
+      color: #a3afde;
+      text-decoration: none;
+      padding: 15px 12px;
+      display: block;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      font-weight: 700;
+      font-size: 17px;
+      transition: background 0.25s;
+    }
+    .sidebar nav a.active, .sidebar nav a:hover {
+      background-color: #6271d4;
+      color: white;
+    }
+    .main-content {
+      flex: 1;
+      background: none;
+      padding: 38px 50px 28px 50px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-y: auto;
+      color: #344080;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #39408a;
+      color: white;
+      padding: 20px 35px;
+      border-radius: 30px;
+      margin-bottom: 36px;
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      box-shadow: 0 8px 35px rgb(57 71 168 / 17%);
+    }
+    .profile-icon {
+      width: 44px;
+      height: 44px;
+      border: 3px solid #e0eaff;
+      border-radius: 50%;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      margin-left: 25px;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgb(0 0 0 / 10%);
+    }
+    .profile-icon svg {
+      width: 26px;
+      height: 26px;
+      fill: #39408a;
+    }
+    .cards-row {
+      display: flex;
+      gap: 28px;
+      margin-bottom: 38px;
+    }
+    .dashboard-card {
+      background: #e0eaff;
+      padding: 34px 30px 28px 30px;
+      border-radius: 26px;
+      box-shadow: 0 12px 25px rgb(0 0 0 / 6%);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-width: 230px;
+      color: #39408a;
+    }
+    .dashboard-card h3 {
+      margin: 0 0 15px 0;
+      font-size: 20px;
+      font-weight: 800;
+      color: #2e3365;
+    }
+    .dashboard-card .value {
+      font-size: 38px;
+      color: #1a2340;
+      font-weight: 900;
+      margin-bottom: 20px;
+    }
+    .mini-chart {
+      width: 100%;
+      height: 60px;
+      margin-top: 12px;
+      margin-bottom: 9px;
+      border-radius: 32px;
+      background: linear-gradient(90deg, #f4f6fe 0%, #dee7ff 100%);
+      display: flex;
+      gap: 10px;
+    }
+    .mini-chart .bar1 {
+      height: 100%;
+      border-radius: 32px;
+      background: #2b70e6;
+      width: 40%;
+    }
+    .mini-chart .bar2 {
+      background: #73b1ff;
+      width: 30%;
+      border-radius: 32px;
+    }
+    .mini-chart .bar3 {
+      background: #aacbff;
+      width: 20%;
+      border-radius: 32px;
+    }
+    .transactions-section, .overview-section, .team-section, .careers-section, .contact-section, .news-section {
+      background: #e0eaff;
+      border-radius: 26px;
+      padding: 32px 36px;
+      margin-bottom: 34px;
+      box-shadow: 0 12px 25px rgb(0 0 0 / 6%);
+      color: #2e3365;
+      max-width: 1000px;
+    }
+    .transactions-section h2, .overview-section h2, .team-section h2, .careers-section h2, .contact-section h2, .news-section h2 {
+      font-weight: 900;
+      font-size: 24px;
+      margin-bottom: 24px;
+      color: #1a2340;
+    }
+    .transactions-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .transactions-list li {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px 0;
+      border-bottom: 1px solid #bcc7f3;
+      font-size: 17px;
+    }
+    .transactions-list li:last-child {
+      border-bottom: none;
+    }
+    .transaction-type.inc {
+      color: #76beef;
+      font-weight: 700;
+    }
+    .transaction-type.exp {
+      color: #f1ae5a;
+      font-weight: 700;
+    }
+    .transaction-type.other {
+      color: #ab8fff;
+      font-weight: 700;
+    }
+    .team-list {
+      display: flex;
+      gap: 33px;
+      flex-wrap: wrap;
+    }
+    .team-member {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #f4f6fe;
+      border-radius: 26px;
+      padding: 16px 18px;
+      width: 180px;
+      box-shadow: 0 6px 16px rgb(0 32 128 / 12%);
+    }
+    .team-member img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #aacbff;
+      margin-bottom: 14px;
+      box-shadow: 0 0 20px rgb(64 74 249 / 31%);
+    }
+    .team-member .name {
+      font-weight: 700;
+      color: #39408a;
+      font-size: 18px;
+    }
+    .team-member .role {
+      font-size: 14px;
+      color: #6271d4;
+    }
+    .career-list {
+      list-style: inherit;
+      margin-left: 26px;
+      font-size: 18px;
+      color: #39408a;
+    }
+    .career-list li {
+      margin-bottom: 8px;
+    }
+    .contact-section p {
+      font-size: 18px;
+      color: #39408a;
+      margin: 7px 0;
+    }
+    .news-section div {
+      font-size: 16px;
+      margin-bottom: 6px;
+    }
+    @media (max-width: 900px) {
+      .cards-row {
+        flex-direction: column;
+        gap: 18px;
+      }
+      .team-list {
+        justify-content: center;
+      }
+    }
