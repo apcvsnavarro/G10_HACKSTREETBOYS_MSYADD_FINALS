@@ -169,21 +169,21 @@
       {id: 'grace', name: 'Grace Oroceo', initial: 'G'},
       {id: 'shaira', name: 'Shaira Distura', initial: 'S'},
       {id: 'carlos', name: 'Carlos E.', initial: 'C'},
-      {id: 'dennis', name: 'Dennis N.', initial: 'D'},
-      {id: 'me', name: 'Me (You)', initial: 'U'}
+      {id: 'dennis', name: 'Dennis N.', initial: 'D'}
     ];
-    let currentUserId = 'grace';
+    let selectedUserId = 'grace';
 
-    // Chat history for each user (demo)
+    // Chat with each recipient is stored as {recipientId: [messages]}
+    // "user": your outgoing message, "other": their reply
     let chatDB = {
       grace: [
         {from: 'other', text: 'Welcome to the ODCC chat.', timestamp: new Date().toLocaleTimeString()},
       ],
       shaira: [{from: 'other', text: 'Audit ready for review.', timestamp: new Date().toLocaleTimeString()}],
       carlos: [],
-      dennis: [],
-      me: []
+      dennis: []
     };
+
     const usersList = document.getElementById('usersList');
     const chatHistory = document.getElementById('chatHistory');
     const chatInput = document.getElementById('chatInput');
@@ -191,22 +191,24 @@
     const exportBtn = document.getElementById('exportBtn');
     const voiceBtn = document.getElementById('voiceBtn');
 
-    // List users
     function renderUsers() {
       usersList.innerHTML = '';
       users.forEach(u => {
         const userDiv = document.createElement('div');
-        userDiv.className = 'chat-person' + (u.id === currentUserId ? ' selected' : '');
-        userDiv.onclick = () => { currentUserId = u.id; renderUsers(); renderChat(); };
+        userDiv.className = 'chat-person' + (u.id === selectedUserId ? ' selected' : '');
+        userDiv.onclick = () => {
+          selectedUserId = u.id;
+          renderUsers();
+          renderChat();
+        };
         userDiv.innerHTML = `<div class="avatar">${u.initial}</div> <span>${u.name}</span>`;
         usersList.appendChild(userDiv);
       });
     }
 
-    // Display chat for selected user
     function renderChat() {
       chatHistory.innerHTML = '';
-      (chatDB[currentUserId] || []).forEach(msg => {
+      (chatDB[selectedUserId] || []).forEach(msg => {
         const bubble = document.createElement('div');
         bubble.className = 'msg-bubble ' + (msg.from === 'user' ? 'user' : 'other');
         bubble.textContent = msg.text;
@@ -222,13 +224,13 @@
     sendBtn.onclick = function () {
       const txt = chatInput.value.trim();
       if (!txt) return;
-      chatDB[currentUserId] = chatDB[currentUserId] || [];
-      chatDB[currentUserId].push({from: 'user', text: txt, timestamp: new Date().toLocaleTimeString()});
+      chatDB[selectedUserId] = chatDB[selectedUserId] || [];
+      chatDB[selectedUserId].push({from: 'user', text: txt, timestamp: new Date().toLocaleTimeString()});
       chatInput.value = '';
       renderChat();
-      // Demo auto reply:
+      // Demo: only auto reply from other side, not push "user" messages into recipient history.
       setTimeout(() => {
-        chatDB[currentUserId].push({from: 'other', text: 'Received: ' + txt, timestamp: new Date().toLocaleTimeString()});
+        chatDB[selectedUserId].push({from: 'other', text: 'Received: ' + txt, timestamp: new Date().toLocaleTimeString()});
         renderChat();
       }, 900);
     };
@@ -239,14 +241,14 @@
       }
     });
     exportBtn.onclick = function () {
-      const history = (chatDB[currentUserId] || [])
-        .map(m => `[${m.timestamp}] ${m.from === 'user' ? 'You' : users.find(u=>u.id===currentUserId).name}: ${m.text}`)
+      const history = (chatDB[selectedUserId] || [])
+        .map(m => `[${m.timestamp}] ${m.from === 'user' ? 'You' : users.find(u=>u.id===selectedUserId).name}: ${m.text}`)
         .join('\n');
       const blob = new Blob([history], { type: 'text/plain' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = users.find(u=>u.id===currentUserId).name + '-chat.txt';
+      a.download = users.find(u=>u.id===selectedUserId).name + '-chat.txt';
       a.click();
     };
     voiceBtn.onclick = function () {
