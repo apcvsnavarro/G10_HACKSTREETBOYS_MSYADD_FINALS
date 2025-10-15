@@ -1,83 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ODCC Chat</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
-    body { margin: 0; font-family: Arial, sans-serif; display: flex; height: 100vh; background-color: #f0f3ff; }
-    .sidebar {
-      width: 200px; background-color: #6271d4; color: white;
-      display: flex; flex-direction: column; padding: 20px 10px;
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      height: 92vh;
+      max-height: 900px;
+      background: #e0eaff;
+      border-radius: 26px;
+      padding: 32px 40px;
+      box-shadow: 0 12px 25px rgba(0,0,0,0.06);
+      margin-top: 24px;
+      position: relative;
+      overflow: hidden;
     }
-    .logo {
-      background-color: white; border-radius: 10px; padding: 5px 15px;
-      color: #39408a; font-weight: bold; font-size: 18px;
-      text-align: center; margin-bottom: 40px; user-select: none;
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding-bottom: 16px;
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
     }
-    .sidebar nav a {
-      color: #c2c8ff; text-decoration: none; padding: 12px 10px;
-      display: block; border-radius: 4px; margin-bottom: 10px; font-weight: 600;
+    .chat-bubble {
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 6px 18px rgb(57 64 138 / 8%);
+      padding: 14px 18px;
+      max-width: 62%;
+      font-size: 16px;
+      color: #39408a;
+      margin-bottom: 5px;
+      animation: fadeIn 0.3s;
+      word-break: break-word;
     }
-    .sidebar nav a.active, .sidebar nav a:hover {
-      background-color: #39408a; color: white;
+    .chat-bubble.user {
+      margin-left: auto;
+      background: #6271d4;
+      color: white;
     }
-    .main-content {
-      flex: 1; padding: 30px; background-color: #f0f3ff;
-      display: flex; flex-direction: column; position: relative;
+    .chat-metadata {
+      font-size: 13px;
+      color: #6271d4;
+      margin-top: 2px;
+      display: flex;
+      justify-content: flex-end;
     }
-    .profile-icon {
-      position: absolute; top: 15px; right: 20px;
-      width: 32px; height: 32px; border: 2px solid #39408a;
-      border-radius: 50%; box-sizing: border-box; cursor: pointer;
+    .chat-form {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: none;
+      position: sticky;
+      bottom: 0;
+      padding-top: 10px;
     }
-    .profile-icon svg {
-      display: block; margin: 4px auto; width: 20px; height: 20px; fill: #39408a;
+    .chat-input {
+      flex: 1;
+      border: 2px solid #bcc7f3;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 16px;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+      background: white;
+      color: #39408a;
+      transition: border 0.3s;
     }
-    .chat-box {
-      background: white; border-radius: 15px; padding: 0; box-shadow: 0 4px 8px rgba(0,0,0,0.03);
-      max-width: 700px; margin: auto; display: flex; min-height: 360px;
+    .chat-input:focus {
+      border-color: #6271d4;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(98, 113, 212, 0.1);
     }
-    .users-list {
-      width: 180px; padding: 18px 0; border-right: 1px solid #e3e3e3; display: flex; flex-direction: column;
-      background: #f7faff; border-radius: 16px 0 0 16px;
+    .chat-send-btn {
+      background: #39408a;
+      color: white;
+      border: none;
+      border-radius: 14px;
+      padding: 12px 20px;
+      font-weight: 800;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.25s;
     }
-    .user {
-      padding: 10px 15px; margin: 7px 18px; border-radius: 12px; background: white;
-      display: flex; align-items: center; font-weight: 600; font-size: 16px; box-shadow: 0 2px 7px rgba(0,0,0,0.05);
-      cursor: pointer; transition: background 0.2s;
+    .chat-send-btn:hover {
+      background: #6271d4;
     }
-    .user:hover, .user.selected {
-      background: #e5eeff;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px);}
+      to {opacity: 1; transform: translateY(0);}
     }
-    .avatar {
-      width: 28px; height: 28px; background: #e0e5f8; border-radius: 50%; display: flex;
-      align-items: center; justify-content: center; margin-right: 10px; font-weight: bold; color: #6271d4;
-    }
-    .chat-window {
-      flex: 1; padding: 20px 22px; display: flex; flex-direction: column; justify-content: flex-end;
-    }
-    .message {
-      max-width: 60%; padding: 10px 14px; border-radius: 12px; font-size: 15px;
-      margin-bottom: 14px; box-shadow: 0 1px 3px rgba(50, 50, 80, 0.08);
-      background: #eceffb;
-    }
-    .message.sent {
-      align-self: flex-end; background: #d2e3fa; color: #23396a;
-      font-weight: 600;
-    }
-    .meta {
-      font-size: 12px; color: #7d89ab; margin-top: 2px;
+    @media (max-width: 900px) {
+      .chat-container {padding: 20px 10px;}
     }
   </style>
 </head>
 <body>
   <div class="sidebar">
     <div class="logo">
-    <img src="ODCC.png" alt="ODCC Logo" style="max-width: 100%; max-height: 80px; display: block; margin: 0 auto; border-radius: 10px;">
+      <img src="ODCC.png" alt="ODCC Logo" style="max-width: 100%; max-height: 80px; border-radius: 10px; display: block; margin: 0 auto;">
     </div>
     <nav>
-      <a href="main.html">Dash Board</a>
+      <a href="main.html">Dashboard</a>
       <a href="request.html">Request</a>
       <a href="review.html">Review</a>
       <a href="chat.html" class="active">Chat</a>
@@ -85,31 +115,57 @@
     </nav>
   </div>
   <div class="main-content">
-    <div class="profile-icon" title="User Profile">
-      <svg viewBox="0 0 24 24"><path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2c-1.11 0-2-0.89-2-2s0.89-2 2 2 2 0.89 2 2-0.89 2-2 2z"/></svg>
+    <div class="header">
+      <span>Team Chat</span>
+      <div class="profile-icon" title="User Profile">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2c-1.11 0-2-0.89-2-2s0.89-2 2-2 2 0.89 2 2-0.89 2-2 2z"/>
+        </svg>
+      </div>
     </div>
-    <div class="chat-box">
-      <div class="users-list">
-        <div class="user selected"><div class="avatar">A</div> Alice</div>
-        <div class="user"><div class="avatar">B</div> Bob</div>
-        <div class="user"><div class="avatar">C</div> Charlie</div>
-        <div class="user"><div class="avatar">D</div> Diana</div>
+    <div class="chat-container">
+      <div class="chat-messages" id="chatMessages">
+        <!-- Message bubbles will appear here -->
       </div>
-      <div class="chat-window">
-        <div class="message">
-          Hi, how are you?
-          <div class="meta">Alice • 10:30 AM</div>
-        </div>
-        <div class="message sent">
-          I'm good, thanks!
-          <div class="meta">You • 10:32 AM</div>
-        </div>
-        <div class="message">
-          Did you finish the audit?
-          <div class="meta">Alice • 10:35 AM</div>
-        </div>
-      </div>
+      <form class="chat-form" id="chatForm">
+        <input class="chat-input" id="chatInput" type="text" placeholder="Type your message..." autocomplete="off" required />
+        <button class="chat-send-btn" type="submit">Send</button>
+      </form>
     </div>
   </div>
+  <script>
+    // Demo messages
+    const messages = [
+      {sender: "user", text: "Hello team!"},
+      {sender: "other", text: "Welcome to the ODCC chat."},
+      {sender: "user", text: "Let's finalize our October reports."},
+      {sender: "other", text: "Sounds great, will update by tomorrow."},
+    ];
+
+    const chatMessages = document.getElementById("chatMessages");
+    const chatForm = document.getElementById("chatForm");
+    const chatInput = document.getElementById("chatInput");
+
+    function renderChat() {
+      chatMessages.innerHTML = "";
+      messages.forEach(msg => {
+        const bubble = document.createElement("div");
+        bubble.className = "chat-bubble" + (msg.sender === "user" ? " user" : "");
+        bubble.textContent = msg.text;
+        chatMessages.appendChild(bubble);
+      });
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    chatForm.addEventListener("submit", e => {
+      e.preventDefault();
+      const text = chatInput.value.trim();
+      if(text) {
+        messages.push({sender: "user", text});
+        renderChat();
+        chatInput.value = "";
+      }
+    });
+    renderChat();
+  </script>
 </body>
 </html>
