@@ -1,15 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ODCC Request</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Additional styles for improved request page */
+    .request-container {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .request-form, .request-list {
+      background: #e0eaff;
+      border-radius: 26px;
+      padding: 30px;
+      flex: 1;
+      min-width: 380px;
+      box-shadow: 0 12px 25px rgba(0,0,0,0.06);
+      color: #39408a;
+    }
+    .request-form h3, .request-list h3 {
+      font-weight: 900;
+      font-size: 24px;
+      margin-bottom: 24px;
+      color: #1a2340;
+    }
+    label {
+      font-weight: 700;
+      margin-bottom: 6px;
+      display: block;
+    }
+    input[type="text"], textarea {
+      width: 100%;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 16px;
+      border: 2px solid #bcc7f3;
+      box-sizing: border-box;
+      resize: vertical;
+      margin-bottom: 20px;
+      font-family: Arial, sans-serif;
+    }
+    input[type="text"]:focus, textarea:focus {
+      outline: none;
+      border-color: #6271d4;
+      box-shadow: 0 0 0 3px rgba(98, 113, 212, 0.1);
+    }
+    textarea {
+      min-height: 100px;
+    }
+    .send-btn {
+      background: #39408a;
+      color: white;
+      border: none;
+      border-radius: 14px;
+      padding: 16px 28px;
+      font-weight: 800;
+      font-size: 17px;
+      cursor: pointer;
+      transition: background 0.25s;
+    }
+    .send-btn:hover {
+      background: #6271d4;
+    }
+    .request-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 26px;
+    }
+    .request-table th, .request-table td {
+      padding: 14px 18px;
+      text-align: left;
+      border-bottom: 1px solid #bcc7f3;
+      font-weight: 600;
+      color: #344080;
+    }
+    .request-table th {
+      background-color: #d6dbff;
+      color: #39408a;
+      font-weight: 900;
+    }
+    .request-card {
+      background: white;
+      padding: 18px 24px;
+      border-radius: 16px;
+      margin-bottom: 16px;
+      border-left: 5px solid #6271d4;
+      box-shadow: 0 6px 20px rgb(57 64 138 / 12%);
+      transition: transform 0.2s;
+    }
+    .request-card:hover {
+      transform: translateX(4px);
+    }
+    .request-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #39408a;
+      margin-bottom: 6px;
+    }
+    .request-description {
+      font-size: 14px;
+      color: #344080;
+      margin-bottom: 8px;
+    }
+    .request-status {
+      font-weight: 700;
+      font-size: 12px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      display: inline-block;
+    }
+    .status-pending {
+      background: #fff4e6;
+      color: #f1ae5a;
+    }
+    .status-in-progress {
+      background: #e6f4ff;
+      color: #2b70e6;
+    }
+    .status-completed {
+      background: #e6fff3;
+      color: #2d7a54;
+    }
+    .request-filter {
+      margin-bottom: 18px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 10px 18px;
+      font-weight: 800;
+      font-size: 14px;
+      color: #39408a;
+      border-radius: 14px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      background: white;
+      transition: 0.3s all;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      border-color: #6271d4;
+      background: #eef4ff;
+      color: #39408a;
+    }
+    .search-input {
+      width: 100%;
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: 2px solid #bcc7f3;
+      font-size: 15px;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+    }
+  </style>
 </head>
 <body>
   <div class="sidebar">
     <div class="logo">
-    <img src="ODCC.png" alt="ODCC Logo" style="max-width: 100%; max-height: 80px; display: block; margin: 0 auto; border-radius: 10px;">
+      <img src="ODCC.png" alt="ODCC Logo" style="max-width: 100%; max-height: 80px; display: block; margin: 0 auto; border-radius: 10px;">
     </div>
     <nav>
       <a href="main.html">Dash Board</a>
@@ -19,37 +170,133 @@
       <a href="ai.html">AI</a>
     </nav>
   </div>
+
   <div class="main-content">
     <div class="profile-icon" title="User Profile">
       <svg viewBox="0 0 24 24"><path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2c-1.11 0-2-0.89-2-2s0.89-2 2-2 2 0.89 2 2-0.89 2-2 2z"/></svg>
     </div>
-    <div class="request-box">
-      <h3 style="margin-bottom:20px; font-weight:700;">Submit New Request</h3>
-      <table class="request-table">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>System Update</td>
-            <td>Update server software</td>
-            <td>Pending</td>
-          </tr>
-          <tr>
-            <td>New Feature</td>
-            <td>Add chat filters</td>
-            <td>In Progress</td>
-          </tr>
-        </tbody>
-      </table>
-      <input class="request-input" type="text" placeholder="Request Title" />
-      <input class="request-input" type="text" placeholder="Description" />
-      <button class="send-btn">Send Request</button>
+
+    <div class="request-container">
+      <section class="request-form">
+        <h3>Submit New Request</h3>
+        <form id="requestForm">
+          <label for="titleInput">Request Title</label>
+          <input id="titleInput" name="title" type="text" placeholder="Request title" required />
+
+          <label for="descriptionInput">Description</label>
+          <textarea id="descriptionInput" name="description" rows="4" placeholder="Describe your request" required maxlength="500"></textarea>
+          <div id="charCount" style="text-align:right; font-size:13px; color:#6271d4;">0/500</div>
+
+          <button type="submit" class="send-btn">Send Request</button>
+        </form>
+      </section>
+
+      <section class="request-list">
+        <h3>My Requests</h3>
+
+        <div class="request-filter" id="filterButtons">
+          <button class="filter-btn active" data-status="all">All</button>
+          <button class="filter-btn" data-status="Pending">Pending</button>
+          <button class="filter-btn" data-status="In Progress">In Progress</button>
+          <button class="filter-btn" data-status="Completed">Completed</button>
+        </div>
+
+        <input type="text" placeholder="Search requests..." id="searchInput" class="search-input" />
+
+        <div id="requestCards">
+          <!-- Requests will be appended here dynamically -->
+        </div>
+      </section>
     </div>
   </div>
+
+  <script>
+    // Character counter for description
+    const descriptionInput = document.getElementById('descriptionInput');
+    const charCount = document.getElementById('charCount');
+    descriptionInput.addEventListener('input', () => {
+      charCount.textContent = descriptionInput.value.length + '/500';
+    });
+
+    // Sample request data for demo
+    let requests = [
+      { title: 'System Update', description: 'Update server software', status: 'Pending' },
+      { title: 'New Feature', description: 'Add chat filters', status: 'In Progress' }
+    ];
+
+    const requestCardsContainer = document.getElementById('requestCards');
+    const filterButtons = document.getElementById('filterButtons').children;
+    const searchInput = document.getElementById('searchInput');
+
+    // Function to render requests based on filter and search
+    function renderRequests(filter = 'all', search = '') {
+      requestCardsContainer.innerHTML = '';
+      const filtered = requests.filter(r => {
+        const matchesStatus = filter === 'all' || r.status === filter;
+        const matchesSearch = r.title.toLowerCase().includes(search.toLowerCase()) || r.description.toLowerCase().includes(search.toLowerCase());
+        return matchesStatus && matchesSearch;
+      });
+
+      if(filtered.length < 1) {
+        requestCardsContainer.innerHTML = '<p>No requests found.</p>';
+        return;
+      }
+
+      filtered.forEach(req => {
+        const card = document.createElement('div');
+        card.className = 'request-card';
+
+        const statusClass = {
+          'Pending': 'status-pending',
+          'In Progress': 'status-in-progress',
+          'Completed': 'status-completed'
+        }[req.status] || 'status-pending';
+
+        card.innerHTML = `
+          <div class="request-title">${req.title}</div>
+          <div class="request-description">${req.description}</div>
+          <span class="request-status ${statusClass}">${req.status}</span>
+        `;
+
+        requestCardsContainer.appendChild(card);
+      });
+    }
+
+    // Filter buttons event
+    Array.from(filterButtons).forEach(btn => {
+      btn.addEventListener('click', () => {
+        for(let b of filterButtons) b.classList.remove('active');
+        btn.classList.add('active');
+        renderRequests(btn.dataset.status, searchInput.value);
+      });
+    });
+
+    // Search input event
+    searchInput.addEventListener('input', () => {
+      const activeBtn = document.querySelector('.filter-btn.active');
+      const filter = activeBtn ? activeBtn.dataset.status : 'all';
+      renderRequests(filter, searchInput.value);
+    });
+
+    // Form submission event
+    document.getElementById('requestForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const title = e.target.title.value.trim();
+      const description = e.target.description.value.trim();
+
+      if(title && description) {
+        requests.push({ title, description, status: 'Pending' });
+        e.target.reset();
+        charCount.textContent = '0/500';
+        renderRequests(); // show updated list
+        alert('Request submitted successfully!');
+      } else {
+        alert('Please fill in all required fields.');
+      }
+    });
+
+    // Initial render
+    renderRequests();
+  </script>
 </body>
 </html>
