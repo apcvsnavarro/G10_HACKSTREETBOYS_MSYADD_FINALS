@@ -6,6 +6,7 @@
   <title>ODCC AI Chat</title>
   <link rel="stylesheet" href="style.css" />
   <style>
+    /* Improved styles for larger chat and extra features */
     .main-content {
       flex: 1;
       padding: 30px;
@@ -35,7 +36,7 @@
       fill: #39408a;
     }
     .chat-container {
-      width: 800px;
+      width: 900px;
       background: white;
       border-radius: 26px;
       padding: 30px 38px;
@@ -43,13 +44,14 @@
       display: flex;
       flex-direction: column;
       gap: 20px;
-      max-height: 80vh;
+      max-height: 85vh;
+      overflow: hidden;
     }
     .chat-header {
       font-size: 28px;
       font-weight: 900;
       color: #1a2340;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
     .chat-history {
       flex: 1;
@@ -91,32 +93,35 @@
     }
     .chat-controls {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .features-row {
+      display: flex;
       gap: 16px;
       flex-wrap: wrap;
     }
-    .generate-summary-btn {
-      background-color: #39408a;
-      color: white;
-      padding: 14px 24px;
-      border-radius: 20px;
+    .feature-btn {
+      padding: 14px 20px;
       font-weight: 800;
-      font-size: 17px;
+      font-size: 15px;
+      border-radius: 20px;
       border: none;
       cursor: pointer;
+      background-color: #39408a;
+      color: white;
       transition: background-color 0.3s;
-      flex-shrink: 0;
     }
-    .generate-summary-btn:hover {
+    .feature-btn:hover {
       background-color: #6271d4;
     }
-    .chat-input-group {
+    .ai-input-row {
       display: flex;
-      gap: 20px;
-      flex: 1 1 300px;
+      gap: 16px;
+      width: 100%;
+      margin-top: 10px;
     }
-    .chat-input {
+    .ai-input {
       flex: 1;
       padding: 17px 22px;
       border-radius: 20px;
@@ -126,12 +131,12 @@
       color: #39408a;
       transition: border-color 0.3s, box-shadow 0.3s;
     }
-    .chat-input:focus {
+    .ai-input:focus {
       border-color: #6271d4;
       box-shadow: 0 0 0 3px rgba(98, 113, 212, 0.1);
       outline: none;
     }
-    .chat-send-btn {
+    .ai-send-btn, .ai-export-btn {
       background-color: #39408a;
       color: white;
       padding: 16px 28px;
@@ -142,23 +147,8 @@
       cursor: pointer;
       transition: background-color 0.3s;
     }
-    .chat-send-btn:hover {
+    .ai-send-btn:hover, .ai-export-btn:hover {
       background-color: #6271d4;
-    }
-    @media (max-width: 850px) {
-      .chat-container {
-        width: 90%;
-      }
-      .chat-controls {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .generate-summary-btn {
-        width: 100%;
-      }
-      .chat-input-group {
-        width: 100%;
-      }
     }
   </style>
 </head>
@@ -171,8 +161,8 @@
       <a href="main.html">Dash Board</a>
       <a href="request.html">Request</a>
       <a href="review.html">Review</a>
-      <a href="chat.html" class="active">Chat</a>
-      <a href="ai.html">AI</a>
+      <a href="chat.html">Chat</a>
+      <a href="ai.html" class="active">AI</a>
     </nav>
   </div>
   <div class="main-content">
@@ -185,10 +175,14 @@
       <div class="chat-header">AI Assistant Chat</div>
       <div class="chat-history" id="chatHistory"></div>
       <div class="chat-controls">
-        <button class="generate-summary-btn" id="generateSummaryBtn">Generate audit summary</button>
-        <div class="chat-input-group">
-          <input type="text" id="chatInput" class="chat-input" placeholder="Ask me anything..." autocomplete="off" />
-          <button class="chat-send-btn" id="sendBtn">Send</button>
+        <div class="features-row">
+          <button class="feature-btn" id="generateSummaryBtn">Generate audit summary</button>
+          <button class="feature-btn" id="exportChatBtn">Export Chat</button>
+          <button class="feature-btn" id="voiceInputBtn">🎙️ Voice Input</button>
+        </div>
+        <div class="ai-input-row">
+          <input type="text" id="chatInput" class="ai-input" placeholder="Ask me anything..." autocomplete="off" />
+          <button class="ai-send-btn" id="sendBtn">Send</button>
         </div>
       </div>
     </div>
@@ -198,18 +192,15 @@
     const chatInput = document.getElementById('chatInput');
     const sendBtn = document.getElementById('sendBtn');
     const generateSummaryBtn = document.getElementById('generateSummaryBtn');
+    const exportChatBtn = document.getElementById('exportChatBtn');
+    const voiceInputBtn = document.getElementById('voiceInputBtn');
 
     const messages = [
       { sender: 'bot', text: 'Hello! How can I assist you today?', timestamp: new Date().toLocaleTimeString() }
     ];
 
     function addMessage(sender, text) {
-      const msg = {
-        sender,
-        text,
-        timestamp: new Date().toLocaleTimeString()
-      };
-      messages.push(msg);
+      messages.push({ sender, text, timestamp: new Date().toLocaleTimeString() });
       renderMessages();
     }
 
@@ -219,38 +210,49 @@
         const bubble = document.createElement('div');
         bubble.className = 'chat-bubble ' + (msg.sender === 'user' ? 'user' : 'bot');
         bubble.textContent = msg.text;
-        bubble.style.position = 'relative';
-
         const timestamp = document.createElement('div');
         timestamp.className = 'chat-timestamp';
         timestamp.textContent = msg.timestamp;
         bubble.appendChild(timestamp);
-
         chatHistory.appendChild(bubble);
       });
       chatHistory.scrollTop = chatHistory.scrollHeight;
     }
 
-    sendBtn.addEventListener('click', () => {
-      const text = chatInput.value.trim();
-      if (!text) return;
-      addMessage('user', text);
+    sendBtn.onclick = () => {
+      const txt = chatInput.value.trim();
+      if (txt === '') return;
+      addMessage('user', txt);
       chatInput.value = '';
       setTimeout(() => {
-        addMessage('bot', 'This is a demo response to: "' + text + '"');
+        addMessage('bot', 'This is a demo reply to: "' + txt + '"');
       }, 1000);
-    });
+    };
 
-    chatInput.addEventListener('keypress', e => {
+    document.querySelector('#chatInput').addEventListener('keypress', e => {
       if (e.key === 'Enter') {
         e.preventDefault();
         sendBtn.click();
       }
     });
 
-    generateSummaryBtn.addEventListener('click', () => {
-      addMessage('bot', 'Audit Summary:\n- Total Balance: $48,350\n- Expenses: $6,340\n- Payables: $3,780\n\nWould you like a detailed report?');
-    });
+    document.getElementById('generateSummaryBtn').onclick = () => {
+      addMessage('bot', 'Audit Summary:\n- Total Balance: $48,350\n- Expenses: $6,340\n- Payables: $3,780\n\nWould you like more details?');
+    };
+
+    document.getElementById('exportChatBtn').onclick = () => {
+      const chatText = messages.map(m => `[${m.timestamp}] ${m.sender}: ${m.text}`).join('\n');
+      const blob = new Blob([chatText], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'chat-export.txt';
+      a.click();
+    };
+
+    document.getElementById('voiceInputBtn').onclick = () => {
+      alert('Voice input feature coming soon!');
+    };
 
     renderMessages();
   </script>
