@@ -6,170 +6,84 @@
   <title>ODCC Dashboard</title>
   <style>
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f0f3ff;
-      display: flex;
-      height: 100vh;
+      margin: 0; font-family: Arial, sans-serif; background-color: #f0f3ff;
+      display: flex; height: 100vh;
     }
     .sidebar {
-      width: 210px;
-      background-color: #6271d4;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      padding: 22px 10px;
-      min-height: 100vh;
+      width: 210px; background-color: #6271d4; color: white; display: flex;
+      flex-direction: column; padding: 22px 10px; min-height: 100vh;
     }
     .logo {
-      background-color: white;
-      border-radius: 10px;
-      padding: 7px 15px;
-      color: #39408a;
-      font-weight: bold;
-      font-size: 20px;
-      text-align: center;
-      margin-bottom: 42px;
-      user-select: none;
-      letter-spacing: 1.5px;
+      background-color: white; border-radius: 10px; padding: 7px 15px;
+      color: #39408a; font-weight: bold; font-size: 20px; text-align: center;
+      margin-bottom: 42px; user-select: none; letter-spacing: 1.5px;
     }
     .sidebar nav a {
-      color: #c2c8ff;
-      text-decoration: none;
-      padding: 13px 10px;
-      display: block;
-      border-radius: 4px;
-      margin-bottom: 11px;
-      font-weight: 600;
-      font-size: 16px;
+      color: #c2c8ff; text-decoration: none; padding: 13px 10px; display: block;
+      border-radius: 4px; margin-bottom: 11px; font-weight: 600; font-size: 16px;
       transition: background 0.2s;
     }
     .sidebar nav a.active, .sidebar nav a:hover {
-      background-color: #39408a;
-      color: white;
+      background-color: #39408a; color: white;
     }
     .main-content {
-      flex: 1;
-      background-color: #f0f3ff;
-      padding: 35px 45px 15px 45px;
-      display: flex;
-      flex-direction: column;
-      position: relative;
+      flex: 1; background-color: #f0f3ff; padding: 35px 45px 20px 45px;
+      display: flex; flex-direction: column; position: relative;
     }
     .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #39408a;
-      color: white;
-      padding: 16px 27px;
-      border-radius: 17px;
-      margin-bottom: 28px;
-      font-size: 22px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      box-shadow: 0 3px 10px rgba(50,90,180,0.06);
+      display: flex; align-items: center; justify-content: space-between;
+      background: #39408a; color: white; padding: 16px 27px; border-radius: 17px;
+      margin-bottom: 28px; font-size: 22px; font-weight: 600; letter-spacing: 1px;
+      box-shadow: 0 3px 10px rgba(50,90,180,0.05);
     }
     .profile-icon {
-      width: 38px;
-      height: 38px;
-      border: 2px solid #eee;
-      border-radius: 50%;
-      box-sizing: border-box;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #fff;
-      margin-left: 20px;
-      cursor: pointer;
+      width: 38px; height: 38px; border: 2px solid #eee; border-radius: 50%;
+      box-sizing: border-box; display: flex; align-items: center; justify-content: center;
+      background: #fff; margin-left: 20px; cursor: pointer;
     }
-    .profile-icon svg {
-      display: block;
-      width: 24px;
-      height: 24px;
-      fill: #39408a;
-    }
+    .profile-icon svg { width: 24px; height: 24px; fill: #39408a; }
     .cards-row {
-      display: flex;
-      gap: 24px;
-      margin-bottom: 30px;
+      display: flex; gap: 24px; margin-bottom: 30px;
     }
     .dashboard-card {
-      background: white;
-      padding: 27px 22px 23px 22px;
-      border-radius: 15px;
-      box-shadow: 0 3px 12px rgba(80, 100, 180, 0.07);
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      min-width: 210px;
+      background: white; padding: 27px 22px 23px 22px; border-radius: 15px;
+      box-shadow: 0 3px 12px rgba(80, 100, 180, 0.06); flex: 1; display: flex;
+      flex-direction: column; align-items: flex-start; min-width: 210px;
     }
     .dashboard-card h3 {
-      margin: 0 0 11px 0;
-      font-size: 17px;
-      font-weight: 600;
-      color: #39408a;
+      margin: 0 0 11px 0; font-size: 17px; font-weight: 600; color: #39408a;
     }
     .dashboard-card .value {
-      font-size: 28px;
-      color: #194873;
-      font-weight: bold;
-      margin-bottom: 10px;
+      font-size: 28px; color: #194873; font-weight: bold; margin-bottom: 10px;
     }
-    .dashboard-card .mini-chart {
-      width: 97%;
-      height: 42px;
-      margin-top: 5px;
-      margin-bottom: 4px;
-      border-radius: 7px;
+    .mini-chart {
+      width: 97%; height: 42px; margin-top: 5px; margin-bottom: 4px; border-radius: 7px;
       background: linear-gradient(90deg, #e5eaff 0%, #f2f7fc 100%);
       position: relative;
     }
-    .dashboard-card .mini-chart .bar {
-      height: 100%;
-      border-radius: 6px;
-      background: #39d397;
-      width: 30%;
-      margin-right: 5px;
-      display: inline-block;
+    .mini-chart .bar {height: 100%; border-radius: 6px; background: #39d397; width: 30%; margin-right: 5px; display: inline-block;}
+    .mini-chart .bar2 {background: #3aa4f9; width: 45%;}
+    .mini-chart .bar3 {background: #fdab3d; width: 20%;}
+    .quick-links {
+      display: flex; gap: 12px; margin-bottom: 24px;
     }
-    .dashboard-card .mini-chart .bar2 {
-      background: #3aa4f9;
-      width: 45%;
+    .quick-link {
+      background: white; border-radius: 10px; padding: 16px 28px; color: #39408a;
+      box-shadow: 0 3px 10px rgba(80,100,180,0.08); font-size: 15px; font-weight: 600;
+      cursor: pointer; transition: background 0.2s;
+      display: flex; align-items: center; gap: 10px; border: none;
     }
-    .dashboard-card .mini-chart .bar3 {
-      background: #fdab3d;
-      width: 20%;
-    }
+    .quick-link:hover { background: #eaf2ff; }
     /* Recent Transactions */
     .transactions-box {
-      background: white;
-      border-radius: 15px;
-      padding: 18px 20px;
-      box-shadow: 0 3px 10px rgba(80,100,180,0.07);
-      margin-bottom: 22px;
-      min-width: 280px;
+      background: white; border-radius: 15px; padding: 18px 20px; box-shadow: 0 3px 10px rgba(80,100,180,0.07);
+      margin-bottom: 22px; min-width: 280px; flex:2;
     }
-    .transactions-box h3 {
-      font-size: 18px;
-      color: #39408a;
-      margin-top: 0;
-      margin-bottom: 16px;
-      font-weight: bold;
-    }
-    .transactions-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
+    .transactions-box h3 { font-size: 18px; color: #39408a; margin-top: 0; margin-bottom: 16px; font-weight: bold; }
+    .transactions-list { list-style: none; padding: 0; margin: 0; }
     .transactions-list li {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 0;
-      border-bottom: 1px solid #eef2fa;
-      font-size: 15px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 0; border-bottom: 1px solid #eef2fa; font-size: 15px;
     }
     .transactions-list li:last-child { border-bottom: none; }
     .transaction-type.inc { color: #39d397; font-weight: 600; }
@@ -177,45 +91,63 @@
     .transaction-type.other { color: #3aa4f9; font-weight: 600; }
     /* Analytics Chart */
     .analytics-box {
-      background: white;
-      border-radius: 15px;
-      padding: 18px 20px;
-      margin-bottom: 22px;
-      max-width: 550px;
-      box-shadow: 0 3px 10px rgba(80,100,170,0.07);
+      background: white; border-radius: 15px; padding: 18px 20px; margin-bottom: 22px; max-width: 400px;
+      box-shadow: 0 3px 10px rgba(80,100,170,0.07); flex:1;
     }
     .analytics-box h3 {
-      font-size: 18px;
-      color: #39408a;
-      margin-top: 0;
-      margin-bottom: 12px;
-      font-weight: bold;
+      font-size: 18px; color: #39408a; margin-top: 0; margin-bottom: 12px; font-weight: bold;
     }
     .chart-placeholder {
-      width: 100%;
-      height: 80px;
-      background: repeating-linear-gradient(90deg, #efefff 0 6px, #f8fafd 6px 12px);
-      border-radius: 10px;
-      position: relative;
-      display: flex;
-      align-items: flex-end;
-      gap: 5px;
-      padding: 0 7px;
+      width: 100%; height: 80px; background: repeating-linear-gradient(90deg, #efefff 0 6px, #f8fafd 6px 12px);
+      border-radius: 10px; position: relative; display: flex; align-items: flex-end; gap: 5px; padding: 0 7px;
     }
-    .chart-placeholder .bar {
-      height: 60%;
-      width: 12px;
-      background: #6271d4;
-      border-radius: 5px 5px 0 0;
+    .bar {width: 12px; background: #6271d4; border-radius: 5px 5px 0 0;}
+    .bar.a {height: 34%; background: #3aa4f9;}
+    .bar.b {height: 90%; background: #39d397;}
+    .bar.c {height: 55%; background: #fdab3d;}
+    /* Testimonials */
+    .testimonials-section {
+      background: white; border-radius: 15px; margin-top: 18px; margin-bottom: 20px;
+      padding: 16px 18px; box-shadow: 0 3px 10px rgba(80,100,180,0.08); max-width: 600px;
     }
-    .chart-placeholder .bar.a {height: 40%; background: #3aa4f9;}
-    .chart-placeholder .bar.b {height: 90%; background: #39d397;}
-    .chart-placeholder .bar.c {height: 70%; background: #fdab3d;}
+    .testimonials-section h3 { font-size: 18px; font-weight: bold; color: #39408a; margin-bottom: 14px; }
+    .testimonial { font-size: 15px; margin-bottom: 10px; color: #395389;}
+    .testimonial-name {font-size:14px;font-weight:600;color:#6271d4;}
+    /* Team */
+    .team-section {
+      background: white; border-radius: 14px; margin-top: 18px; margin-bottom: 20px;
+      padding: 16px 18px; box-shadow: 0 3px 10px rgba(80,100,180,0.08); max-width: 600px;
+    }
+    .team-section h3 { font-size: 18px; font-weight: bold; color: #39408a; margin-bottom: 10px;}
+    .team-list { display:flex; gap:23px; }
+    .team-member { display:flex; flex-direction:column; align-items:center; background:#f0f3ff; border-radius:10px; padding:9px 16px;}
+    .team-member img { width:53px; height:53px; border-radius:50%; margin-bottom:7px; background:#dbeafe;}
+    .team-member .name { font-weight:600; color:#39408a; }
+    .team-member .role { font-size:12px; color:#6271d4; }
+    /* Careers */
+    .careers-section {
+      background: white; border-radius: 14px; padding: 16px 18px; box-shadow: 0 3px 10px rgba(80,100,180,0.08); max-width: 430px; margin-bottom:22px;
+    }
+    .careers-section h3 { font-size: 18px; font-weight: bold; color: #39408a;}
+    .career-list {margin-top:7px;}
+    .career-list li {font-size:14.5px;color:#194873;margin-bottom:3px;}
+    /* Contact */
+    .contact-section {
+      background: white; border-radius: 13px; margin-top: 14px; padding: 14px 16px; box-shadow: 0 3px 10px rgba(80,100,180,0.08); max-width: 410px;
+      font-size:14px;color:#39408a;
+    }
+    /* News/Updates */
+    .news-section {
+      background: white; border-radius: 13px; margin-top: 14px; padding: 14px 16px; box-shadow: 0 3px 10px rgba(80,100,180,0.08); max-width:410px;
+      font-size:14px;color:#39408a;
+    }
+    .news-section h3 { font-size: 16px; color: #6271d4;}
     /* Responsive */
     @media (max-width: 900px) {
       .cards-row { flex-direction: column; gap: 12px;}
-      .main-content { padding: 15px !important;}
-      .analytics-box { max-width: 100%; }
+      .main-content { padding: 10px !important;}
+      .analytics-box, .transactions-box, .testimonials-section, .team-section, .careers-section, .contact-section, .news-section { max-width:100%; }
+      .team-list { flex-direction: column; gap:10px;}
     }
   </style>
 </head>
@@ -234,8 +166,16 @@
     <div class="header">
       <span>Accounting Dashboard</span>
       <div class="profile-icon" title="User Profile">
-        <svg viewBox="0 0 24 24"><path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2c-1.11 0-2-0.89-2-2s0.89-2 2-2 2 0.89 2 2-0.89 2-2 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2c-1.11 0-2-0.89-2-2s0.89-2 2 2 2 0.89 2 2-0.89 2-2 2z"/></svg>
       </div>
+    </div>
+
+    <div class="quick-links">
+      <button class="quick-link">Bookkeeping</button>
+      <button class="quick-link">Tax Filing</button>
+      <button class="quick-link">Payroll</button>
+      <button class="quick-link">Audit</button>
+      <button class="quick-link">Business Advisory</button>
     </div>
 
     <div class="cards-row">
@@ -278,7 +218,7 @@
     </div>
 
     <div style="display:flex;gap:24px;flex-wrap:wrap;">
-      <div class="transactions-box" style="flex:2;">
+      <div class="transactions-box">
         <h3>Recent Transactions</h3>
         <ul class="transactions-list">
           <li><span>Client Payment</span> <span class="transaction-type inc">+$2,000</span></li>
@@ -288,7 +228,7 @@
           <li><span>Subscription Renewed</span> <span class="transaction-type other">-$19</span></li>
         </ul>
       </div>
-      <div class="analytics-box" style="flex:1;">
+      <div class="analytics-box">
         <h3>Income/Expense Trend</h3>
         <div class="chart-placeholder">
           <div class="bar a" style="height:34%;"></div>
@@ -298,6 +238,46 @@
           <div class="bar a" style="height:42%;"></div>
         </div>
       </div>
+    </div>
+
+    <div class="testimonials-section">
+      <h3>Client Testimonials</h3>
+      <div class="testimonial">“ODCC’s team makes year-end reporting simple and efficient!”<span class="testimonial-name"> – Business Owner</span></div>
+      <div class="testimonial">“Fast and reliable payroll solutions. Great support!”<span class="testimonial-name"> – HR Manager</span></div>
+    </div>
+    <div class="team-section">
+      <h3>Meet the Team</h3>
+      <div class="team-list">
+        <div class="team-member">
+          <img src="https://ph.linkedin.com/in/marygraceoroceocpa/photo" alt="Grace Oroceo"/>
+          <span class="name">Grace Oroceo, CPA</span>
+          <span class="role">Managing Partner</span>
+        </div>
+        <div class="team-member">
+          <img src="https://ph.linkedin.com/in/shairadistura/photo" alt="Shaira Distura"/>
+          <span class="name">Shaira Distura, CPA</span>
+          <span class="role">Audit Specialist</span>
+        </div>
+      </div>
+    </div>
+    <div class="careers-section">
+      <h3>Careers at ODCC</h3>
+      <ul class="career-list">
+        <li>Accounting Assistant (Now Hiring)</li>
+        <li>Tax Associate (Apply Soon)</li>
+      </ul>
+    </div>
+    <div class="contact-section">
+      <strong>Contact Us:</strong> <br>
+      Oroceo, Dimandal & Co. CPAs <br>
+      Mandaluyong City, Philippines <br>
+      Email: info@odcc.com <br>
+      Phone: (03) 622-7810
+    </div>
+    <div class="news-section">
+      <h3>Firm Updates</h3>
+      <div><strong>10/1/2025:</strong> E-filing tax portal now available for clients.</div>
+      <div><strong>9/21/2025:</strong> ODCC recognized for audit excellence.</div>
     </div>
   </div>
 </body>
