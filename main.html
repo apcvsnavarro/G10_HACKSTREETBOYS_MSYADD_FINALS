@@ -10,23 +10,33 @@
     font-family: Arial, sans-serif;
     display: flex;
     height: 100vh;
-    background-color: #f0f3ff;
+    background-color: #f0f3ff; /* Light background */
   }
 
   /* Sidebar */
   .sidebar {
     width: 200px;
-    background: #232323; /* gold from logo */
-    color: #fff;
+    background-color: #6271d4; /* Original purple */
+    color: white;
     display: flex;
     flex-direction: column;
     padding: 20px 10px;
   }
 
-
+  .sidebar .logo {
+    background-color: white;
+    border-radius: 10px;
+    padding: 5px 15px;
+    color: #39408a;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 40px;
+    user-select: none;
+  }
 
   .sidebar nav a {
-    color: #fff;
+    color: #c2c8ff;
     text-decoration: none;
     padding: 12px 10px;
     display: block;
@@ -36,8 +46,8 @@
   }
   .sidebar nav a:hover,
   .sidebar nav a.active {
-    background-color: #b19941;
-    color: #232323;
+    background-color: #39408a;
+    color: white;
   }
 
   /* Main content */
@@ -51,7 +61,7 @@
 
   /* Header bar at the top */
   .header {
-    background-color: #232323;
+    background-color: #222;
     color: white;
     padding: 10px 20px;
     font-size: 16px;
@@ -83,15 +93,12 @@
   /* Dashboard cards container */
   .cards {
     display: flex;
-    background: #fff;
-    border: 2px solid #b19941;        /* Gold border */
-    color: #232323;
     gap: 20px;
     margin-bottom: 20px;
   }
 
   .card {
-    background: #232323;
+    background: white;
     padding: 20px;
     border-radius: 15px;
     flex: 1;
@@ -100,7 +107,6 @@
   }
 
   .card h3 {
-    color: #232323;
     margin-top: 0;
     font-weight: 700;
     margin-bottom: 15px;
@@ -165,12 +171,12 @@
 
 </style>
 </head>
-<!-- ...previous HTML head and styles remain unchanged... -->
 <body>
+
 <div class="sidebar">
   <div class="logo">
-  <img src="ODCC.png" alt="ODCC Logo" style="max-width: 100%; max-height: 80px; display: block; margin: 0 auto; background: transparent;">
-  </div>
+  <img src="ODCC.png" alt="ODCC Logo" style="max-width: 100%; max-height: 80px; display: block; margin: 0 auto; border-radius: 10px;">
+</div>
   <nav>
     <a href="#" class="active">Dash Board</a>
     <a href="#">Request</a>
@@ -180,8 +186,7 @@
   </nav>
 </div>
 
-<div class="main-content" id="main-content">
-  <!-- All the dashboard content just like above -->
+<div class="main-content">
   <div class="header">
     Dash Board
     <div class="profile-icon" title="User Profile">
@@ -189,7 +194,7 @@
     </div>
   </div>
 
-  <div class="cards" id="dashboard-section">
+  <div class="cards">
     <div class="card">
       <h3>Tasks Overview</h3>
       <div class="bar-graph">
@@ -197,70 +202,22 @@
         <div class="bar tall"></div>
       </div>
     </div>
+
     <div class="card">
       <h3>Task Status</h3>
       <div class="donut-graph"></div>
     </div>
+
     <div class="card">
       <h3>Notifications</h3>
       <div class="notifications">3 new alerts</div>
     </div>
   </div>
-  <div class="recent" id="recent-section">
+
+  <div class="recent">
     <input type="text" placeholder="Recent Activities & Reports" readonly>
   </div>
-  <!-- Placeholder sections for other sidebar buttons -->
-  <div id="request-section" style="display:none"><h2>Request Section</h2></div>
-  <div id="review-section" style="display:none"><h2>Review Section</h2></div>
-  <div id="chat-section" style="display:none"><h2>Chat Section</h2></div>
-  <div id="ai-section" style="display:none"><h2>AI Section</h2></div>
 </div>
-<script>
-  // Helper function to hide all content sections
-  function hideAllSections() {
-    document.getElementById('dashboard-section').style.display = 'flex';
-    document.getElementById('recent-section').style.display = 'block';
-    document.getElementById('request-section').style.display = 'none';
-    document.getElementById('review-section').style.display = 'none';
-    document.getElementById('chat-section').style.display = 'none';
-    document.getElementById('ai-section').style.display = 'none';
-  }
-  function showSection(section) {
-    document.getElementById('dashboard-section').style.display = 'none';
-    document.getElementById('recent-section').style.display = 'none';
-    document.getElementById('request-section').style.display = 'none';
-    document.getElementById('review-section').style.display = 'none';
-    document.getElementById('chat-section').style.display = 'none';
-    document.getElementById('ai-section').style.display = 'none';
-    document.getElementById(section).style.display = 'block';
-  }
-  // Button click events
-  document.getElementById('dashboard-btn').onclick = function () {
-    hideAllSections();
-    document.getElementById('dashboard-section').style.display = 'flex';
-    document.getElementById('recent-section').style.display = 'block';
-    setActive(this);
-  }
-  document.getElementById('request-btn').onclick = function () {
-    showSection('request-section');
-    setActive(this);
-  }
-  document.getElementById('review-btn').onclick = function () {
-    showSection('review-section');
-    setActive(this);
-  }
-  document.getElementById('chat-btn').onclick = function () {
-    showSection('chat-section');
-    setActive(this);
-  }
-  document.getElementById('ai-btn').onclick = function () {
-    showSection('ai-section');
-    setActive(this);
-  }
-  function setActive(element) {
-    document.querySelectorAll('.sidebar nav a').forEach(a => a.classList.remove('active'));
-    element.classList.add('active');
-  }
-</script>
+
 </body>
 </html>
