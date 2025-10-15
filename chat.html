@@ -7,8 +7,8 @@
   <link rel="stylesheet" href="style.css" />
   <style>
     html, body {
-      height: 100%;
       margin: 0;
+      height: 100%;
       font-family: Arial, sans-serif;
       background: linear-gradient(120deg, #e0eaff 0%, #f0f8fb 100%);
       display: flex;
@@ -19,11 +19,10 @@
       display: flex;
       min-height: 0;
     }
-    /* Sidebar */
     .sidebar {
-      background: #39408a;
-      color: white;
       width: 210px;
+      background-color: #39408a;
+      color: white;
       display: flex;
       flex-direction: column;
       padding: 22px 10px;
@@ -35,6 +34,7 @@
       max-height: 80px;
       margin-bottom: 60px;
       border-radius: 10px;
+      object-fit: contain;
     }
     .sidebar nav a {
       color: #a3afde;
@@ -51,7 +51,6 @@
       background-color: #6271d4;
       color: white;
     }
-    /* Main */
     .main {
       flex: 1 1 auto;
       display: flex;
@@ -94,7 +93,6 @@
       height: 26px;
       fill: #39408a;
     }
-    /* Chat Layout */
     .chat-layout {
       display: flex;
       flex: 1 1 auto;
@@ -102,7 +100,6 @@
       min-height: 0;
       overflow: hidden;
     }
-    /* Users List */
     .users-list {
       width: 230px;
       background: #e0eaff;
@@ -142,7 +139,6 @@
       justify-content: center;
       align-items: center;
     }
-    /* Chat area */
     .chat-area {
       flex: 1 1 auto;
       background: white;
@@ -181,7 +177,7 @@
       line-height: 1.4;
       white-space: pre-wrap;
       position: relative;
-      box-shadow: 0 6px 18px rgb(57 64 138 / 8%);
+      box-shadow: 0 6px 18px rgba(57, 64, 138, 0.08);
       user-select: text;
     }
     .message-bubble.user {
