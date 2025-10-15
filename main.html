@@ -171,20 +171,21 @@
 
 </style>
 </head>
+<!-- ...previous HTML head and styles remain unchanged... -->
 <body>
-
 <div class="sidebar">
   <div class="logo">✔️ODCC</div>
   <nav>
-    <a href="#" class="active">Dash Board</a>
-    <a href="#">Request</a>
-    <a href="#">Review</a>
-    <a href="#">Chat</a>
-    <a href="#">AI</a>
+    <a href="#" id="dashboard-btn" class="active">Dash Board</a>
+    <a href="#" id="request-btn">Request</a>
+    <a href="#" id="review-btn">Review</a>
+    <a href="#" id="chat-btn">Chat</a>
+    <a href="#" id="ai-btn">AI</a>
   </nav>
 </div>
 
-<div class="main-content">
+<div class="main-content" id="main-content">
+  <!-- All the dashboard content just like above -->
   <div class="header">
     Dash Board
     <div class="profile-icon" title="User Profile">
@@ -192,7 +193,7 @@
     </div>
   </div>
 
-  <div class="cards">
+  <div class="cards" id="dashboard-section">
     <div class="card">
       <h3>Tasks Overview</h3>
       <div class="bar-graph">
@@ -200,22 +201,70 @@
         <div class="bar tall"></div>
       </div>
     </div>
-
     <div class="card">
       <h3>Task Status</h3>
       <div class="donut-graph"></div>
     </div>
-
     <div class="card">
       <h3>Notifications</h3>
       <div class="notifications">3 new alerts</div>
     </div>
   </div>
-
-  <div class="recent">
+  <div class="recent" id="recent-section">
     <input type="text" placeholder="Recent Activities & Reports" readonly>
   </div>
+  <!-- Placeholder sections for other sidebar buttons -->
+  <div id="request-section" style="display:none"><h2>Request Section</h2></div>
+  <div id="review-section" style="display:none"><h2>Review Section</h2></div>
+  <div id="chat-section" style="display:none"><h2>Chat Section</h2></div>
+  <div id="ai-section" style="display:none"><h2>AI Section</h2></div>
 </div>
-
+<script>
+  // Helper function to hide all content sections
+  function hideAllSections() {
+    document.getElementById('dashboard-section').style.display = 'flex';
+    document.getElementById('recent-section').style.display = 'block';
+    document.getElementById('request-section').style.display = 'none';
+    document.getElementById('review-section').style.display = 'none';
+    document.getElementById('chat-section').style.display = 'none';
+    document.getElementById('ai-section').style.display = 'none';
+  }
+  function showSection(section) {
+    document.getElementById('dashboard-section').style.display = 'none';
+    document.getElementById('recent-section').style.display = 'none';
+    document.getElementById('request-section').style.display = 'none';
+    document.getElementById('review-section').style.display = 'none';
+    document.getElementById('chat-section').style.display = 'none';
+    document.getElementById('ai-section').style.display = 'none';
+    document.getElementById(section).style.display = 'block';
+  }
+  // Button click events
+  document.getElementById('dashboard-btn').onclick = function () {
+    hideAllSections();
+    document.getElementById('dashboard-section').style.display = 'flex';
+    document.getElementById('recent-section').style.display = 'block';
+    setActive(this);
+  }
+  document.getElementById('request-btn').onclick = function () {
+    showSection('request-section');
+    setActive(this);
+  }
+  document.getElementById('review-btn').onclick = function () {
+    showSection('review-section');
+    setActive(this);
+  }
+  document.getElementById('chat-btn').onclick = function () {
+    showSection('chat-section');
+    setActive(this);
+  }
+  document.getElementById('ai-btn').onclick = function () {
+    showSection('ai-section');
+    setActive(this);
+  }
+  function setActive(element) {
+    document.querySelectorAll('.sidebar nav a').forEach(a => a.classList.remove('active'));
+    element.classList.add('active');
+  }
+</script>
 </body>
 </html>
