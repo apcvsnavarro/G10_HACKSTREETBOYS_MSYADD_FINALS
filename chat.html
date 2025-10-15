@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ODCC Chat</title>
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; display: flex; height: 100vh; background-color: #f0f3ff; }
+    .sidebar {
+      width: 200px; background-color: #6271d4; color: white;
+      display: flex; flex-direction: column; padding: 20px 10px;
+    }
+    .logo {
+      background-color: white; border-radius: 10px; padding: 5px 15px;
+      color: #39408a; font-weight: bold; font-size: 18px;
+      text-align: center; margin-bottom: 40px; user-select: none;
+    }
+    .sidebar nav a {
+      color: #c2c8ff; text-decoration: none; padding: 12px 10px;
+      display: block; border-radius: 4px; margin-bottom: 10px; font-weight: 600;
+    }
+    .sidebar nav a.active, .sidebar nav a:hover {
+      background-color: #39408a; color: white;
+    }
+    .main-content {
+      flex: 1; padding: 30px; background-color: #f0f3ff;
+      display: flex; flex-direction: column; position: relative;
+    }
+    .profile-icon {
+      position: absolute; top: 15px; right: 20px;
+      width: 32px; height: 32px; border: 2px solid #39408a;
+      border-radius: 50%; box-sizing: border-box; cursor: pointer;
+    }
+    .profile-icon svg {
+      display: block; margin: 4px auto; width: 20px; height: 20px; fill: #39408a;
+    }
+    .chat-box {
+      background: white; border-radius: 15px; padding: 0; box-shadow: 0 4px 8px rgba(0,0,0,0.03);
+      max-width: 700px; margin: auto; display: flex; min-height: 360px;
+    }
+    .users-list {
+      width: 180px; padding: 18px 0; border-right: 1px solid #e3e3e3; display: flex; flex-direction: column;
+      background: #f7faff; border-radius: 16px 0 0 16px;
+    }
+    .user {
+      padding: 10px 15px; margin: 7px 18px; border-radius: 12px; background: white;
+      display: flex; align-items: center; font-weight: 600; font-size: 16px; box-shadow: 0 2px 7px rgba(0,0,0,0.05);
+      cursor: pointer; transition: background 0.2s;
+    }
+    .user:hover, .user.selected {
+      background: #e5eeff;
+    }
+    .avatar {
+      width: 28px; height: 28px; background: #e0e5f8; border-radius: 50%; display: flex;
+      align-items: center; justify-content: center; margin-right: 10px; font-weight: bold; color: #6271d4;
+    }
+    .chat-window {
+      flex: 1; padding: 20px 22px; display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .message {
+      max-width: 60%; padding: 10px 14px; border-radius: 12px; font-size: 15px;
+      margin-bottom: 14px; box-shadow: 0 1px 3px rgba(50, 50, 80, 0.08);
+      background: #eceffb;
+    }
+    .message.sent {
+      align-self: flex-end; background: #d2e3fa; color: #23396a;
+      font-weight: 600;
+    }
+    .meta {
+      font-size: 12px; color: #7d89ab; margin-top: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo">
+    <img src="ODCC.png" alt="ODCC Logo" style="max-width: 100%; max-height: 80px; display: block; margin: 0 auto; border-radius: 10px;">
+    </div>
+    <nav>
+      <a href="main.html">Dash Board</a>
+      <a href="request.html">Request</a>
+      <a href="review.html">Review</a>
+      <a href="chat.html" class="active">Chat</a>
+      <a href="ai.html">AI</a>
+    </nav>
+  </div>
+  <div class="main-content">
+    <div class="profile-icon" title="User Profile">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2c-1.11 0-2-0.89-2-2s0.89-2 2 2 2 0.89 2 2-0.89 2-2 2z"/></svg>
+    </div>
+    <div class="chat-box">
+      <div class="users-list">
+        <div class="user selected"><div class="avatar">A</div> Alice</div>
+        <div class="user"><div class="avatar">B</div> Bob</div>
+        <div class="user"><div class="avatar">C</div> Charlie</div>
+        <div class="user"><div class="avatar">D</div> Diana</div>
+      </div>
+      <div class="chat-window">
+        <div class="message">
+          Hi, how are you?
+          <div class="meta">Alice • 10:30 AM</div>
+        </div>
+        <div class="message sent">
+          I'm good, thanks!
+          <div class="meta">You • 10:32 AM</div>
+        </div>
+        <div class="message">
+          Did you finish the audit?
+          <div class="meta">Alice • 10:35 AM</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
