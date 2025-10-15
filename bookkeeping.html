@@ -56,6 +56,7 @@
       display: flex;
       flex-direction: column;
       position: relative;
+      max-width: 900px;
     }
     .header {
       display: flex;
@@ -89,35 +90,11 @@
       height: 24px;
       fill: #39408a;
     }
-    .content-section {
-      background: white;
-      border-radius: 15px;
-      padding: 28px 32px;
-      box-shadow: 0 3px 10px rgba(80, 100, 180, 0.07);
-      flex-grow: 1;
-      color: #384460;
-      max-width: 900px;
-      margin-bottom: 24px;
-    }
-    h1 {
-      margin-top: 0;
-      font-weight: 700;
-      font-size: 28px;
-      color: #39408a;
-      margin-bottom: 12px;
-    }
-    p {
-      font-size: 16px;
-      line-height: 1.5;
-      margin-bottom: 1em;
-      max-width: 750px;
-    }
     .quick-links {
       display: flex;
       gap: 12px;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
-      max-width: 900px;
     }
     .quick-link {
       background: #39408a;
@@ -133,8 +110,29 @@
       min-width: 130px;
       border: none;
     }
-    .quick-link:hover {
+    .quick-link:hover, .quick-link.active {
       background: #6271d4;
+    }
+    .content-section {
+      background: white;
+      border-radius: 15px;
+      padding: 28px 32px;
+      box-shadow: 0 3px 10px rgba(80, 100, 180, 0.07);
+      flex-grow: 1;
+      color: #384460;
+    }
+    h1 {
+      margin-top: 0;
+      font-weight: 700;
+      font-size: 28px;
+      color: #39408a;
+      margin-bottom: 12px;
+    }
+    p {
+      font-size: 16px;
+      line-height: 1.5;
+      margin-bottom: 1em;
+      max-width: 750px;
     }
   </style>
 </head>
@@ -142,11 +140,12 @@
   <div class="sidebar">
     <div class="logo">ODCC</div>
     <nav>
-      <a href="main.html" class="active">Dash Board</a>
+      <a href="main.html">Dash Board</a>
       <a href="request.html">Request</a>
       <a href="review.html">Review</a>
       <a href="chat.html">Chat</a>
       <a href="ai.html">AI</a>
+      <a href="bookkeeping.html" class="active">Bookkeeping</a>
     </nav>
   </div>
   <div class="main-content">
@@ -157,18 +156,71 @@
       </div>
     </div>
     <div class="quick-links">
-      <button class="quick-link" onclick="location.href='bookkeeping.html'">Bookkeeping</button>
-      <button class="quick-link" onclick="location.href='tax_filing.html'">Tax Filing</button>
-      <button class="quick-link" onclick="location.href='payroll.html'">Payroll</button>
-      <button class="quick-link" onclick="location.href='audit.html'">Audit</button>
-      <button class="quick-link" onclick="location.href='business_advisory.html'">Business Advisory</button>
+      <button class="quick-link active" onclick="showContent('bookkeeping')">Bookkeeping</button>
+      <button class="quick-link" onclick="showContent('taxFiling')">Tax Filing</button>
+      <button class="quick-link" onclick="showContent('payroll')">Payroll</button>
+      <button class="quick-link" onclick="showContent('audit')">Audit</button>
+      <button class="quick-link" onclick="showContent('businessAdvisory')">Business Advisory</button>
     </div>
-    <div class="content-section">
+    <div id="service-content" class="content-section">
       <h1>Expert Bookkeeping Services</h1>
       <p>Our expert bookkeeping services ensure your records are accurate and up to date. We handle data entry, reconciliations, and monthly reports tailored to your business size and industry.</p>
       <p>We help you maintain clear and compliant financial records, freeing you to focus on growing your business.</p>
       <p>Bookkeeping services include: ledger management, bank reconciliations, invoice tracking, accounts payable and receivable management, and financial reporting.</p>
     </div>
   </div>
+  <script>
+    const services = {
+      bookkeeping: {
+        title: "Expert Bookkeeping Services",
+        content: `
+          <p>Our expert bookkeeping services ensure your records are accurate and up to date. We handle data entry, reconciliations, and monthly reports tailored to your business size and industry.</p>
+          <p>We help you maintain clear and compliant financial records, freeing you to focus on growing your business.</p>
+          <p>Bookkeeping services include: ledger management, bank reconciliations, invoice tracking, accounts payable and receivable management, and financial reporting.</p>
+        `
+      },
+      taxFiling: {
+        title: "Comprehensive Tax Filing Services",
+        content: `
+          <p>We provide comprehensive tax preparation and filing services to ensure compliance and maximize your returns. Timely submission with professional accuracy is our priority.</p>
+          <p>Our team handles all necessary filings and correspondences with tax authorities on your behalf.</p>
+        `
+      },
+      payroll: {
+        title: "Accurate Payroll Management",
+        content: `
+          <p>Our payroll services ensure your employees are paid accurately and punctually. We manage deductions, taxes, benefits, and compliance with labor laws.</p>
+          <p>Let us simplify your payroll process while adhering to government regulations.</p>
+        `
+      },
+      audit: {
+        title: "Rigorous Audit Services",
+        content: `
+          <p>We offer thorough audit services to assure the accuracy and transparency of your financial reports. Compliance with standards and identifying risks are part of our audit scope.</p>
+          <p>Partner with us for reliable and insightful audits to meet regulatory requirements.</p>
+        `
+      },
+      businessAdvisory: {
+        title: "Strategic Business Advisory",
+        content: `
+          <p>Our advisory services guide your business decisions for growth and sustainability. We provide insights on financial management, operations, and market strategy.</p>
+          <p>We partner with you to create strategies that optimize performance and profitability.</p>
+        `
+      }
+    };
+
+    function showContent(serviceKey) {
+      // Update buttons active state
+      document.querySelectorAll('.quick-link').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.replace(/\s+/g, '') === serviceKey);
+      });
+
+      // Update content section
+      const service = services[serviceKey];
+      if (service) {
+        document.getElementById('service-content').innerHTML = `<h1>${service.title}</h1>${service.content}`;
+      }
+    }
+  </script>
 </body>
 </html>
