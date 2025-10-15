@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ODCC Request</title>
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; display: flex; height: 100vh; background-color: #f0f3ff; }
+    .sidebar {
+      width: 200px; background-color: #6271d4; color: white;
+      display: flex; flex-direction: column; padding: 20px 10px;
+    }
+    .logo {
+      background-color: white; border-radius: 10px; padding: 5px 15px;
+      color: #39408a; font-weight: bold; font-size: 18px;
+      text-align: center; margin-bottom: 40px; user-select: none;
+    }
+    .sidebar nav a {
+      color: #c2c8ff; text-decoration: none; padding: 12px 10px;
+      display: block; border-radius: 4px; margin-bottom: 10px; font-weight: 600;
+    }
+    .sidebar nav a.active, .sidebar nav a:hover {
+      background-color: #39408a; color: white;
+    }
+    .main-content {
+      flex: 1; padding: 30px; background-color: #f0f3ff;
+      display: flex; flex-direction: column; position: relative;
+    }
+    .profile-icon {
+      position: absolute; top: 15px; right: 20px;
+      width: 32px; height: 32px; border: 2px solid #39408a;
+      border-radius: 50%; box-sizing: border-box; cursor: pointer;
+    }
+    .profile-icon svg {
+      display: block; margin: 4px auto; width: 20px; height: 20px; fill: #39408a;
+    }
+    .request-box {
+      background: white; border-radius: 15px; padding: 25px; box-shadow: 0 4px 8px rgba(0,0,0,0.03);
+      max-width: 450px; margin: auto;
+    }
+    .request-table {
+      width: 100%; border-collapse: collapse; margin-bottom: 20px;
+    }
+    .request-table th, .request-table td {
+      text-align: left; padding: 8px; border-bottom: 1px solid #ececec;
+    }
+    .request-table th {
+      font-weight: 700;
+    }
+    .request-input {
+      width: 100%; padding: 8px 12px; margin-bottom: 12px; border-radius: 8px;
+      border: 1px solid #ccc; font-size: 15px;
+    }
+    .send-btn {
+      background: #39408a; color: white; font-weight: 600; border: none; width: 100%;
+      padding: 12px; border-radius: 8px; font-size: 16px; cursor: pointer;
+    }
+    .send-btn:hover {
+      background: #6271d4;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo">ODCC</div>
+    <nav>
+      <a href="dashboard.html">Dash Board</a>
+      <a class="active" href="request.html">Request</a>
+      <a href="review.html">Review</a>
+      <a href="chat.html">Chat</a>
+      <a href="ai.html">AI</a>
+    </nav>
+  </div>
+  <div class="main-content">
+    <div class="profile-icon" title="User Profile">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2c-1.11 0-2-0.89-2-2s0.89-2 2-2 2 0.89 2 2-0.89 2-2 2z"/></svg>
+    </div>
+    <div class="request-box">
+      <h3 style="margin-bottom:20px; font-weight:700;">Submit New Request</h3>
+      <table class="request-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>System Update</td>
+            <td>Update server software</td>
+            <td>Pending</td>
+          </tr>
+          <tr>
+            <td>New Feature</td>
+            <td>Add chat filters</td>
+            <td>In Progress</td>
+          </tr>
+        </tbody>
+      </table>
+      <input class="request-input" type="text" placeholder="Request Title" />
+      <input class="request-input" type="text" placeholder="Description" />
+      <button class="send-btn">Send Request</button>
+    </div>
+  </div>
+</body>
+</html>
