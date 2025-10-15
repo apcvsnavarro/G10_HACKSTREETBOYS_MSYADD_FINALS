@@ -5,53 +5,180 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ODCC - Login</title>
   <style>
-    body { background: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    .login-container { background: white; padding: 40px 50px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 320px; text-align: center;}
-    .toggle-btns { display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; }
-    .toggle-btns button { padding: 10px 24px; background: #013a63; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 16px; transition: background 0.3s;}
-    .toggle-btns button.active, .toggle-btns button:hover { background: #025a9e;}
-    .form-group { text-align: left; margin-bottom: 20px;}
-    .form-group label { font-weight: 600; color: #333;}
-    .form-group input { width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; margin-top: 8px;}
-    .form-group input:focus { border-color: #013a63; outline: none;}
-    .error-message { color: red; font-size: 14px; margin-bottom: 12px;}
-    .login-container button[type="submit"] { width: 100%; padding: 12px; font-size: 18px; font-weight: bold; background: #013a63; color: white; border: none; border-radius: 4px; margin-top: 10px;}
-    .login-container button[type="submit"]:hover { background: #025a9e;}
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(120deg, #e0eaff 0%, #f0f8fb 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .login-panel {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 8px 36px rgba(50, 80, 200, 0.10);
+      width: 380px;
+      max-width: 90vw;
+      padding: 40px 34px 34px 34px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    .login-logo {
+      font-size: 30px;
+      font-weight: bold;
+      color: #3445b4;
+      margin-bottom: 12px;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .login-logo::before {
+      content: "✓";
+      color: #1d69e0;
+      font-size: 27px;
+      font-weight: 600;
+    }
+    .welcome {
+      font-size: 18px;
+      color: #39408a;
+      margin-bottom: 30px;
+      text-align: center;
+      font-weight: 500;
+    }
+    .toggle-btns {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+      justify-content: center;
+      width: 100%;
+    }
+    .toggle-btns button {
+      flex: 1;
+      padding: 10px;
+      background: #e4e9fe;
+      color: #39408a;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 15px;
+      transition: background 0.3s;
+      box-shadow: 0 2px 6px rgba(60,80,160,0.07);
+    }
+    .toggle-btns button.active, .toggle-btns button:hover {
+      background: #39408a;
+      color: white;
+    }
+    h2 {
+      font-size: 24px;
+      color: #3445b4;
+      margin-bottom: 16px;
+      margin-top: 12px;
+      font-weight: bold;
+      text-align: center;
+    }
+    .form-group {
+      text-align: left;
+      margin-bottom: 18px;
+      width: 100%;
+    }
+    .form-group label {
+      font-weight: 600;
+      color: #39408a;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 10px 13px;
+      border: 1.3px solid #c3c8ed;
+      border-radius: 8px;
+      font-size: 16px;
+      background: #f5f8ff;
+      transition: border-color 0.2s;
+      margin-top: 4px;
+    }
+    .form-group input:focus {
+      border-color: #39408a;
+      outline: none;
+      background: #eaf1ff;
+    }
+    .error-message {
+      color: #e22b2b;
+      font-size: 14px;
+      margin-bottom: 12px;
+      font-weight: bold;
+      text-align: left;
+      width: 100%;
+    }
+    button[type="submit"] {
+      width: 100%;
+      padding: 13px;
+      font-size: 16px;
+      font-weight: bold;
+      background: linear-gradient(90deg,#3445b4 60%,#6271d4 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      margin-top: 4px;
+      cursor: pointer;
+      transition: background 0.2s;
+      box-shadow: 0 2px 12px rgba(60,90,190,0.09);
+    }
+    button[type="submit"]:hover {
+      background: #013a63;
+    }
+    .footer-note {
+      margin-top: 23px;
+      text-align: center;
+      color: #a2aad8;
+      font-size: 13px;
+    }
   </style>
 </head>
 <body>
-  <div class="login-container">
+  <div class="login-panel">
+    <div class="login-logo">ODCC</div>
+    <div class="welcome">Welcome to ODCC platform.<br>Please sign in or create an account to continue.</div>
     <div class="toggle-btns">
       <button id="signInBtn" class="active" onclick="showForm('signIn')">Sign In</button>
       <button id="signUpBtn" onclick="showForm('signUp')">Sign Up</button>
     </div>
-    <form id="signInForm" onsubmit="return validateLogin()">
-      <h2>Sign In to ODCC</h2>
+    <form id="signInForm" onsubmit="return validateLogin()" autocomplete="on">
+      <h2>Sign In</h2>
       <div class="form-group">
         <label for="username">Username</label>
-        <input type="text" id="username" name="username" required />
+        <input type="text" id="username" name="username" autocomplete="username" required />
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" required />
+        <input type="password" id="password" name="password" autocomplete="current-password" required />
       </div>
       <div id="errorMsg" class="error-message"></div>
       <button type="submit">Sign In</button>
     </form>
 
-    <form id="signUpForm" style="display:none;" onsubmit="return validateSignUp()">
-      <h2>Sign Up for ODCC</h2>
+    <form id="signUpForm" style="display:none;" onsubmit="return validateSignUp()" autocomplete="on">
+      <h2>Sign Up</h2>
       <div class="form-group">
         <label for="newUsername">Username</label>
-        <input type="text" id="newUsername" name="newUsername" required />
+        <input type="text" id="newUsername" name="newUsername" autocomplete="username" required />
       </div>
       <div class="form-group">
         <label for="newPassword">Password</label>
-        <input type="password" id="newPassword" name="newPassword" required />
+        <input type="password" id="newPassword" name="newPassword" autocomplete="new-password" required />
       </div>
       <div id="signupMsg" class="error-message"></div>
       <button type="submit">Sign Up</button>
     </form>
+    <div class="footer-note">
+      © 2025 ODCC. All rights reserved.
+    </div>
   </div>
   <script>
     function showForm(form) {
@@ -65,7 +192,7 @@
       const password = document.getElementById('password').value.trim();
       const errorMsg = document.getElementById('errorMsg');
       if (username === 'admin' && password === '1234') {
-        window.location.href = 'main.html'; // Redirect to dashboard
+        window.location.href = 'main.html'; // Redirect on successful login
         return false;
       } else {
         errorMsg.textContent = 'Invalid username or password. Please try again.';
@@ -80,7 +207,7 @@
         signupMsg.textContent = 'Username or password too short.';
         return false;
       }
-      signupMsg.textContent = 'Sign-up successful! Now you can sign in.'; // Replace with your registration logic
+      signupMsg.textContent = 'Sign-up successful! Now you can sign in.';
       return false;
     }
   </script>
