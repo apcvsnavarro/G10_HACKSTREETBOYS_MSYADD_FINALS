@@ -89,10 +89,32 @@
       bottom: -18px;
       right: 18px;
     }
+    .chat-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .generate-summary-btn {
+      background-color: #39408a;
+      color: white;
+      padding: 14px 24px;
+      border-radius: 20px;
+      font-weight: 800;
+      font-size: 17px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      flex-shrink: 0;
+    }
+    .generate-summary-btn:hover {
+      background-color: #6271d4;
+    }
     .chat-input-group {
       display: flex;
       gap: 20px;
-      margin-top: 10px;
+      flex: 1 1 300px;
     }
     .chat-input {
       flex: 1;
@@ -109,7 +131,7 @@
       box-shadow: 0 0 0 3px rgba(98, 113, 212, 0.1);
       outline: none;
     }
-    .chat-send-btn, .chat-clear-btn {
+    .chat-send-btn {
       background-color: #39408a;
       color: white;
       padding: 16px 28px;
@@ -120,12 +142,22 @@
       cursor: pointer;
       transition: background-color 0.3s;
     }
-    .chat-send-btn:hover, .chat-clear-btn:hover {
+    .chat-send-btn:hover {
       background-color: #6271d4;
     }
     @media (max-width: 850px) {
       .chat-container {
         width: 90%;
+      }
+      .chat-controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .generate-summary-btn {
+        width: 100%;
+      }
+      .chat-input-group {
+        width: 100%;
       }
     }
   </style>
@@ -152,10 +184,12 @@
     <div class="chat-container">
       <div class="chat-header">AI Assistant Chat</div>
       <div class="chat-history" id="chatHistory"></div>
-      <div class="chat-input-group">
-        <input type="text" id="chatInput" class="chat-input" placeholder="Ask me anything..." autocomplete="off" />
-        <button class="chat-send-btn" id="sendBtn">Send</button>
-        <button class="chat-clear-btn" id="clearBtn">Clear</button>
+      <div class="chat-controls">
+        <button class="generate-summary-btn" id="generateSummaryBtn">Generate audit summary</button>
+        <div class="chat-input-group">
+          <input type="text" id="chatInput" class="chat-input" placeholder="Ask me anything..." autocomplete="off" />
+          <button class="chat-send-btn" id="sendBtn">Send</button>
+        </div>
       </div>
     </div>
   </div>
@@ -163,7 +197,7 @@
     const chatHistory = document.getElementById('chatHistory');
     const chatInput = document.getElementById('chatInput');
     const sendBtn = document.getElementById('sendBtn');
-    const clearBtn = document.getElementById('clearBtn');
+    const generateSummaryBtn = document.getElementById('generateSummaryBtn');
 
     const messages = [
       { sender: 'bot', text: 'Hello! How can I assist you today?', timestamp: new Date().toLocaleTimeString() }
@@ -199,7 +233,7 @@
 
     sendBtn.addEventListener('click', () => {
       const text = chatInput.value.trim();
-      if(!text) return;
+      if (!text) return;
       addMessage('user', text);
       chatInput.value = '';
       setTimeout(() => {
@@ -208,15 +242,14 @@
     });
 
     chatInput.addEventListener('keypress', e => {
-      if(e.key === 'Enter') {
+      if (e.key === 'Enter') {
         e.preventDefault();
         sendBtn.click();
       }
     });
 
-    clearBtn.addEventListener('click', () => {
-      messages.length = 0;
-      renderMessages();
+    generateSummaryBtn.addEventListener('click', () => {
+      addMessage('bot', 'Audit Summary:\n- Total Balance: $48,350\n- Expenses: $6,340\n- Payables: $3,780\n\nWould you like a detailed report?');
     });
 
     renderMessages();
