@@ -6,7 +6,6 @@
   <title>ODCC AI Chat</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* Improved styles for larger chat and extra features */
     .main-content {
       flex: 1;
       padding: 30px;
@@ -118,8 +117,8 @@
     .ai-input-row {
       display: flex;
       gap: 16px;
+      flex: 1 1 300px;
       width: 100%;
-      margin-top: 10px;
     }
     .ai-input {
       flex: 1;
@@ -150,6 +149,18 @@
     .ai-send-btn:hover, .ai-export-btn:hover {
       background-color: #6271d4;
     }
+    @media (max-width: 850px) {
+      .chat-container {
+        width: 90%;
+      }
+      .chat-controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .chat-input-group {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -176,7 +187,6 @@
       <div class="chat-history" id="chatHistory"></div>
       <div class="chat-controls">
         <div class="features-row">
-          <button class="feature-btn" id="generateSummaryBtn">Generate audit summary</button>
           <button class="feature-btn" id="exportChatBtn">Export Chat</button>
           <button class="feature-btn" id="voiceInputBtn">🎙️ Voice Input</button>
         </div>
@@ -191,7 +201,6 @@
     const chatHistory = document.getElementById('chatHistory');
     const chatInput = document.getElementById('chatInput');
     const sendBtn = document.getElementById('sendBtn');
-    const generateSummaryBtn = document.getElementById('generateSummaryBtn');
     const exportChatBtn = document.getElementById('exportChatBtn');
     const voiceInputBtn = document.getElementById('voiceInputBtn');
 
@@ -219,28 +228,31 @@
       chatHistory.scrollTop = chatHistory.scrollHeight;
     }
 
-    sendBtn.onclick = () => {
-      const txt = chatInput.value.trim();
-      if (txt === '') return;
-      addMessage('user', txt);
+    sendBtn.addEventListener('click', () => {
+      const text = chatInput.value.trim();
+      if (text === '') return;
+      addMessage('user', text);
       chatInput.value = '';
-      setTimeout(() => {
-        addMessage('bot', 'This is a demo reply to: "' + txt + '"');
-      }, 1000);
-    };
+      const lowerText = text.toLowerCase();
+      if (lowerText === 'generate audit summary') {
+        setTimeout(() => {
+          addMessage('bot', 'Audit Summary:\n- Total Balance: $48,350\n- Expenses: $6,340\n- Payables: $3,780\n\nWould you like more details?');
+        }, 1000);
+      } else {
+        setTimeout(() => {
+          addMessage('bot', 'This is a demo reply to: "' + text + '"');
+        }, 1000);
+      }
+    });
 
-    document.querySelector('#chatInput').addEventListener('keypress', e => {
+    chatInput.addEventListener('keypress', e => {
       if (e.key === 'Enter') {
         e.preventDefault();
         sendBtn.click();
       }
     });
 
-    document.getElementById('generateSummaryBtn').onclick = () => {
-      addMessage('bot', 'Audit Summary:\n- Total Balance: $48,350\n- Expenses: $6,340\n- Payables: $3,780\n\nWould you like more details?');
-    };
-
-    document.getElementById('exportChatBtn').onclick = () => {
+    exportChatBtn.addEventListener('click', () => {
       const chatText = messages.map(m => `[${m.timestamp}] ${m.sender}: ${m.text}`).join('\n');
       const blob = new Blob([chatText], { type: 'text/plain' });
       const url = URL.createObjectURL(blob);
@@ -248,11 +260,11 @@
       a.href = url;
       a.download = 'chat-export.txt';
       a.click();
-    };
+    });
 
-    document.getElementById('voiceInputBtn').onclick = () => {
+    voiceInputBtn.addEventListener('click', () => {
       alert('Voice input feature coming soon!');
-    };
+    });
 
     renderMessages();
   </script>
