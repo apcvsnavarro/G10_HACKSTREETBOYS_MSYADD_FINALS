@@ -4,359 +4,101 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ODCC Dashboard</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(120deg, #e0eaff 0%, #f0f8fb 100%);
-      display: flex;
-      height: 100vh;
-    }
-    .sidebar {
-      width: 210px;
-      background-color: #39408a;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      padding: 22px 10px;
-      min-height: 100vh;
-    }
-
-    .sidebar .logo img {
-      max-width: 100%;
-      max-height: 80px;
-      display: block;
-      margin-bottom: 60px;
-      border-radius: 10px;
-      object-fit: contain;
-    }
-
-    .sidebar nav a {
-      color: #a3afde;
-      text-decoration: none;
-      padding: 15px 12px;
-      display: block;
-      border-radius: 12px;
-      margin-bottom: 12px;
-      font-weight: 700;
-      font-size: 17px;
-      transition: background 0.25s;
-    }
-    .sidebar nav a.active, .sidebar nav a:hover {
-      background-color: #6271d4;
-      color: white;
-    }
-    .main-content {
-      flex: 1;
-      background: none;
-      padding: 38px 50px 28px 50px;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow-y: auto;
-      color: #344080;
-    }
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #39408a;
-      color: white;
-      padding: 20px 35px;
-      border-radius: 30px;
-      margin-bottom: 36px;
-      font-size: 26px;
-      font-weight: 800;
-      letter-spacing: 1.5px;
-      box-shadow: 0 8px 35px rgb(57 71 168 / 17%);
-    }
-    .profile-icon {
-      width: 44px;
-      height: 44px;
-      border: 3px solid #e0eaff;
-      border-radius: 50%;
-      box-sizing: border-box;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: white;
-      margin-left: 25px;
-      cursor: pointer;
-      box-shadow: 0 2px 10px rgb(0 0 0 / 10%);
-    }
-    .profile-icon svg {
-      width: 26px;
-      height: 26px;
-      fill: #39408a;
-    }
-    .cards-row {
-      display: flex;
-      gap: 28px;
-      margin-bottom: 38px;
-    }
-    .dashboard-card {
-      background: #e0eaff;
-      padding: 34px 30px 28px 30px;
-      border-radius: 26px;
-      box-shadow: 0 12px 25px rgb(0 0 0 / 6%);
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      min-width: 230px;
-      color: #39408a;
-    }
-    .dashboard-card h3 {
-      margin: 0 0 15px 0;
-      font-size: 20px;
-      font-weight: 800;
-      color: #2e3365;
-    }
-    .dashboard-card .value {
-      font-size: 38px;
-      color: #1a2340;
-      font-weight: 900;
-      margin-bottom: 20px;
-    }
-    .mini-chart {
-      width: 100%;
-      height: 60px;
-      margin-top: 12px;
-      margin-bottom: 9px;
-      border-radius: 32px;
-      background: linear-gradient(90deg, #f4f6fe 0%, #dee7ff 100%);
-      display: flex;
-      gap: 10px;
-    }
-    .mini-chart .bar1 {
-      height: 100%;
-      border-radius: 32px;
-      background: #2b70e6;
-      width: 40%;
-    }
-    .mini-chart .bar2 {
-      background: #73b1ff;
-      width: 30%;
-      border-radius: 32px;
-    }
-    .mini-chart .bar3 {
-      background: #aacbff;
-      width: 20%;
-      border-radius: 32px;
-    }
-    .transactions-section, .overview-section, .team-section, .careers-section, .contact-section, .news-section {
-      background: #e0eaff;
-      border-radius: 26px;
-      padding: 32px 36px;
-      margin-bottom: 34px;
-      box-shadow: 0 12px 25px rgb(0 0 0 / 6%);
-      color: #2e3365;
-      max-width: 1000px;
-    }
-    .transactions-section h2, .overview-section h2, .team-section h2, .careers-section h2, .contact-section h2, .news-section h2 {
-      font-weight: 900;
-      font-size: 24px;
-      margin-bottom: 24px;
-      color: #1a2340;
-    }
-    .transactions-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .transactions-list li {
-      display: flex;
-      justify-content: space-between;
-      padding: 16px 0;
-      border-bottom: 1px solid #bcc7f3;
-      font-size: 17px;
-    }
-    .transactions-list li:last-child {
-      border-bottom: none;
-    }
-    .transaction-type.inc {
-      color: #76beef;
-      font-weight: 700;
-    }
-    .transaction-type.exp {
-      color: #f1ae5a;
-      font-weight: 700;
-    }
-    .transaction-type.other {
-      color: #ab8fff;
-      font-weight: 700;
-    }
-    .team-list {
-      display: flex;
-      gap: 33px;
-      flex-wrap: wrap;
-    }
-    .team-member {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: #f4f6fe;
-      border-radius: 26px;
-      padding: 16px 18px;
-      width: 180px;
-      box-shadow: 0 6px 16px rgb(0 32 128 / 12%);
-    }
-    .team-member img {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: #aacbff;
-      margin-bottom: 14px;
-      box-shadow: 0 0 20px rgb(64 74 249 / 31%);
-    }
-    .team-member .name {
-      font-weight: 700;
-      color: #39408a;
-      font-size: 18px;
-    }
-    .team-member .role {
-      font-size: 14px;
-      color: #6271d4;
-    }
-    .career-list {
-      list-style: inherit;
-      margin-left: 26px;
-      font-size: 18px;
-      color: #39408a;
-    }
-    .career-list li {
-      margin-bottom: 8px;
-    }
-    .contact-section p {
-      font-size: 18px;
-      color: #39408a;
-      margin: 7px 0;
-    }
-    .news-section div {
-      font-size: 16px;
-      margin-bottom: 6px;
-    }
-    @media (max-width: 900px) {
-      .cards-row {
-        flex-direction: column;
-        gap: 18px;
-      }
-      .team-list {
-        justify-content: center;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="sidebar">
     <div class="logo">
-      <img src="ODCC.png" alt="ODCC Logo" />
+      <img src="logo.png" alt="ODCC Logo" />
     </div>
     <nav>
-      <a href="main.html" class="active">Dash Board</a>
-      <a href="request.html">Request</a>
-      <a href="review.html">Review</a>
+      <a href="main.html" class="active">Dashboard</a>
+      <a href="request.html">Requests</a>
       <a href="chat.html">Chat</a>
-      <a href="ai.html">AI</a>
+      <a href="review.html">Reviews</a>
+      <a href="ai.html">AI Assistant</a>
     </nav>
   </div>
+
   <div class="main-content">
-    <div class="header">
-      Accounting Dashboard
-      <div class="profile-icon" title="User Profile">
-        <svg viewBox="0 0 24 24"><path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2c-1.11 0-2-0.89-2-2s0.89-2 2-2 2 0.89 2 2-0.89 2-2 2z"/></svg>
-      </div>
-    </div>
-    <div class="cards-row">
-      <div class="dashboard-card">
+    <header class="header">
+      <h1>Accounting Dashboard</h1>
+      <div class="second">ODCC - Oroceo, Dimandal & Co. CPAs</div>
+    </header>
+
+    <section class="card-body">
+      <div class="card">
         <h3>Total Balance</h3>
-        <div class="value">$48,350</div>
-        <div class="mini-chart">
-          <div class="bar bar1"></div>
-          <div class="bar bar2"></div>
-          <div class="bar bar3"></div>
-        </div>
-        <span>+4.2% this month</span>
+        <p class="balance">$48,350</p>
       </div>
-      <div class="dashboard-card">
-        <h3>Receivables</h3>
-        <div class="value">$12,420</div>
-        <div class="mini-chart">
-          <div class="bar bar2"></div>
-          <div class="bar bar1"></div>
+      <div class="stats">
+        <div class="stat">
+          <h5>Receivables</h5>
+          <p>$12,420</p>
         </div>
-        <span>+2 new clients</span>
-      </div>
-      <div class="dashboard-card">
-        <h3>Expenses</h3>
-        <div class="value">$6,340</div>
-        <div class="mini-chart">
-          <div class="bar bar3"></div>
-          <div class="bar bar2"></div>
+        <div class="stat">
+          <h5>Expenses</h5>
+          <p>$6,340</p>
         </div>
-        <span>-1.8% this month</span>
-      </div>
-      <div class="dashboard-card">
-        <h3>Payables</h3>
-        <div class="value">$3,780</div>
-        <div class="mini-chart">
-          <div class="bar bar2"></div>
-        </div>
-        <span>+1 upcoming</span>
-      </div>
-    </div>
-    <div class="firm-overview overview-section">
-      <h2>Firm Overview</h2>
-      <p>Oroceo, Dimandal & Co. CPAs is a trusted team of Certified Public Accountants based in Mandaluyong City, Philippines. Specializing in bookkeeping, tax compliance, audits, payroll, and business advisory, the firm offers reliable and efficient financial solutions tailored to client needs.</p>
-    </div>
-    <div class="services-section overview-section">
-      <h2>Core Services</h2>
-      <ul>
-        <li>Bookkeeping & Financial Reporting</li>
-        <li>Tax Filing & Compliance</li>
-        <li>Payroll Management</li>
-        <li>Audit & Assurance</li>
-        <li>Business Advisory & Consulting</li>
-      </ul>
-    </div>
-    <div class="contact-section overview-section">
-      <h2>Contact Information</h2>
-      <p><strong>Address:</strong> Mandaluyong City, Philippines</p>
-      <p><strong>Email:</strong> info@odcc.com</p>
-      <p><strong>Phone:</strong> (03) 622-7810</p>
-    </div>
-    <div class="testimonials-section overview-section">
-      <h2>Client Testimonials</h2>
-      <div class="testimonial">“ODCC’s team makes year-end reporting simple and efficient!”<div class="name">Business Owner</div></div>
-      <div class="testimonial">“Fast and reliable payroll solutions. Great support!”<div class="name">HR Manager</div></div>
-    </div>
-    <div class="team-section overview-section">
-      <h2>Meet the Team</h2>
-      <div class="team-list">
-        <div class="team-member">
-          <img src="https://ph.linkedin.com/in/marygraceoroceocpa/photo" alt="Grace Oroceo" />
-          <div class="name">Grace Oroceo, CPA</div>
-          <div class="role">Managing Partner</div>
-        </div>
-        <div class="team-member">
-          <img src="https://ph.linkedin.com/in/shairadistura/photo" alt="Shaira Distura" />
-          <div class="name">Shaira Distura, CPA</div>
-          <div class="role">Audit Specialist</div>
+        <div class="stat">
+          <h5>Payables</h5>
+          <p>$3,780</p>
         </div>
       </div>
-    </div>
-    <div class="careers-section overview-section">
-      <h2>Careers at ODCC</h2>
-      <ul class="career-list">
-        <li>Accounting Assistant (Now Hiring)</li>
-        <li>Tax Associate (Apply Soon)</li>
-      </ul>
-    </div>
-    <div class="news-section overview-section">
-      <h2>Firm Updates</h2>
-      <p><strong>10/1/2025:</strong> E-filing tax portal now available for clients.</p>
-      <p><strong>9/21/2025:</strong> ODCC recognized for audit excellence.</p>
-    </div>
+
+      <div class="card">
+        <h3>Firm Overview</h3>
+        <p>Oroceo, Dimandal & Co. CPAs is a trusted team of Certified Public Accountants based in Mandaluyong City, Philippines. Specializing in bookkeeping, tax compliance, audits, payroll, and business advisory, the firm offers reliable and efficient financial solutions tailored to client needs.</p>
+      </div>
+
+      <div class="card">
+        <h3>Core Services</h3>
+        <ul>
+          <li>Bookkeeping & Financial Reporting</li>
+          <li>Tax Filing & Compliance</li>
+          <li>Payroll Management</li>
+          <li>Audit & Assurance</li>
+          <li>Business Advisory & Consulting</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Contact Information</h3>
+        <p><strong>Address:</strong> Mandaluyong City, Philippines</p>
+        <p><strong>Email:</strong> info@odcc.com</p>
+        <p><strong>Phone:</strong> (03) 622-7810</p>
+      </div>
+
+      <div class="card">
+        <h3>Client Testimonials</h3>
+        <p>“ODCC’s team makes year-end reporting simple and efficient!” — Business Owner</p>
+        <p>“Fast and reliable payroll solutions. Great support!” — HR Manager</p>
+      </div>
+
+      <div class="card">
+        <h3>Meet the Team</h3>
+        <p>Grace Oroceo, CPA — Managing Partner</p>
+        <p>Shaira Distura, CPA — Audit Specialist</p>
+      </div>
+
+      <div class="card">
+        <h3>Careers at ODCC</h3>
+        <ul>
+          <li>Accounting Assistant (Now Hiring)</li>
+          <li>Tax Associate (Apply Soon)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Firm Updates</h3>
+        <p><strong>10/1/2025:</strong> E-filing tax portal now available for clients.</p>
+        <p><strong>9/21/2025:</strong> ODCC recognized for audit excellence.</p>
+      </div>
+    </section>
+
+    <footer>
+      &copy; 2025 Oroceo, Dimandal & Co. CPAs. All rights reserved.
+    </footer>
   </div>
 </body>
 </html>
