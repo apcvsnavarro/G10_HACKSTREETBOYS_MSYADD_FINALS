@@ -1,224 +1,304 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ODCC Dashboard</title>
-<style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    display: flex;
-    height: 100vh;
-    background-color: #f0f3ff; /* Light background */
-  }
-
-  /* Sidebar */
-  .sidebar {
-    width: 200px;
-    background-color: #6271d4; /* Original purple */
-    color: white;
-    display: flex;
-    flex-direction: column;
-    padding: 20px 10px;
-  }
-
-  .sidebar .logo {
-    background-color: white;
-    border-radius: 10px;
-    padding: 5px 15px;
-    color: #39408a;
-    font-weight: bold;
-    font-size: 18px;
-    text-align: center;
-    margin-bottom: 40px;
-    user-select: none;
-  }
-
-  .sidebar nav a {
-    color: #c2c8ff;
-    text-decoration: none;
-    padding: 12px 10px;
-    display: block;
-    border-radius: 4px;
-    margin-bottom: 10px;
-    font-weight: 600;
-  }
-  .sidebar nav a:hover,
-  .sidebar nav a.active {
-    background-color: #39408a;
-    color: white;
-  }
-
-  /* Main content */
-  .main-content {
-    flex: 1;
-    padding: 20px 30px;
-    background-color: #f0f3ff;
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* Header bar at the top */
-  .header {
-    border-radius: 15px 15px 0 0;
-    background-color: #222;
-    color: white;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: 600;
-    user-select: none;
-  }
-
-  /* Top-right profile icon container */
-  .profile-icon {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    width: 32px;
-    height: 32px;
-    border: 2px solid #39408a;
-    border-radius: 50%;
-    box-sizing: border-box;
-    cursor: pointer;
-  }
-
-  .profile-icon svg {
-    display: block;
-    margin: 4px auto;
-    width: 20px;
-    height: 20px;
-    fill: #39408a;
-  }
-
-  /* Dashboard cards container */
-  .cards {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
-  }
-
-  .card {
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    flex: 1;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-    font-weight: 600;
-  }
-
-  .card h3 {
-    margin-top: 0;
-    font-weight: 700;
-    margin-bottom: 15px;
-  }
-
-  /* Placeholder styles for graphs */
-  .bar-graph {
-    height: 80px;
-    width: 60px;
-    display: flex;
-    align-items: flex-end;
-    gap: 10px;
-  }
-  .bar {
-    width: 15px;
-    background-color: #39d397;
-    border-radius: 3px 3px 0 0;
-  }
-  .bar.small {
-    height: 40px;
-    background-color: #3aa4f9;
-  }
-  .bar.tall {
-    height: 80px;
-    background-color: #39d397;
-  }
-
-  .donut-graph {
-    width: 80px;
-    height: 80px;
-    position: relative;
-    border-radius: 50%;
-    background: conic-gradient(#39d397 0% 60%, #3aa4f9 60% 85%, #fdb32e 85% 100%);
-  }
-
-  /* Notifications card */
-  .notifications {
-    font-weight: 400;
-    font-size: 14px;
-    color: #555;
-    margin-top: 10px;
-  }
-
-  /* Recent activities input */
-  .recent {
-    background: white;
-    border-radius: 15px;
-    padding: 15px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-    font-weight: 600;
-  }
-
-  .recent input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #bbb;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 300;
-    color: #777;
-  }
-
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ODCC Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f3ff;
+      display: flex;
+      height: 100vh;
+    }
+    .sidebar {
+      width: 210px;
+      background-color: #6271d4;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      padding: 22px 10px;
+      min-height: 100vh;
+    }
+    .logo {
+      background-color: white;
+      border-radius: 10px;
+      padding: 7px 15px;
+      color: #39408a;
+      font-weight: bold;
+      font-size: 20px;
+      text-align: center;
+      margin-bottom: 42px;
+      user-select: none;
+      letter-spacing: 1.5px;
+    }
+    .sidebar nav a {
+      color: #c2c8ff;
+      text-decoration: none;
+      padding: 13px 10px;
+      display: block;
+      border-radius: 4px;
+      margin-bottom: 11px;
+      font-weight: 600;
+      font-size: 16px;
+      transition: background 0.2s;
+    }
+    .sidebar nav a.active, .sidebar nav a:hover {
+      background-color: #39408a;
+      color: white;
+    }
+    .main-content {
+      flex: 1;
+      background-color: #f0f3ff;
+      padding: 35px 45px 15px 45px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #39408a;
+      color: white;
+      padding: 16px 27px;
+      border-radius: 17px;
+      margin-bottom: 28px;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      box-shadow: 0 3px 10px rgba(50,90,180,0.06);
+    }
+    .profile-icon {
+      width: 38px;
+      height: 38px;
+      border: 2px solid #eee;
+      border-radius: 50%;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      margin-left: 20px;
+      cursor: pointer;
+    }
+    .profile-icon svg {
+      display: block;
+      width: 24px;
+      height: 24px;
+      fill: #39408a;
+    }
+    .cards-row {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 30px;
+    }
+    .dashboard-card {
+      background: white;
+      padding: 27px 22px 23px 22px;
+      border-radius: 15px;
+      box-shadow: 0 3px 12px rgba(80, 100, 180, 0.07);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-width: 210px;
+    }
+    .dashboard-card h3 {
+      margin: 0 0 11px 0;
+      font-size: 17px;
+      font-weight: 600;
+      color: #39408a;
+    }
+    .dashboard-card .value {
+      font-size: 28px;
+      color: #194873;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .dashboard-card .mini-chart {
+      width: 97%;
+      height: 42px;
+      margin-top: 5px;
+      margin-bottom: 4px;
+      border-radius: 7px;
+      background: linear-gradient(90deg, #e5eaff 0%, #f2f7fc 100%);
+      position: relative;
+    }
+    .dashboard-card .mini-chart .bar {
+      height: 100%;
+      border-radius: 6px;
+      background: #39d397;
+      width: 30%;
+      margin-right: 5px;
+      display: inline-block;
+    }
+    .dashboard-card .mini-chart .bar2 {
+      background: #3aa4f9;
+      width: 45%;
+    }
+    .dashboard-card .mini-chart .bar3 {
+      background: #fdab3d;
+      width: 20%;
+    }
+    /* Recent Transactions */
+    .transactions-box {
+      background: white;
+      border-radius: 15px;
+      padding: 18px 20px;
+      box-shadow: 0 3px 10px rgba(80,100,180,0.07);
+      margin-bottom: 22px;
+      min-width: 280px;
+    }
+    .transactions-box h3 {
+      font-size: 18px;
+      color: #39408a;
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-weight: bold;
+    }
+    .transactions-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .transactions-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #eef2fa;
+      font-size: 15px;
+    }
+    .transactions-list li:last-child { border-bottom: none; }
+    .transaction-type.inc { color: #39d397; font-weight: 600; }
+    .transaction-type.exp { color: #fdab3d; font-weight: 600; }
+    .transaction-type.other { color: #3aa4f9; font-weight: 600; }
+    /* Analytics Chart */
+    .analytics-box {
+      background: white;
+      border-radius: 15px;
+      padding: 18px 20px;
+      margin-bottom: 22px;
+      max-width: 550px;
+      box-shadow: 0 3px 10px rgba(80,100,170,0.07);
+    }
+    .analytics-box h3 {
+      font-size: 18px;
+      color: #39408a;
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-weight: bold;
+    }
+    .chart-placeholder {
+      width: 100%;
+      height: 80px;
+      background: repeating-linear-gradient(90deg, #efefff 0 6px, #f8fafd 6px 12px);
+      border-radius: 10px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      gap: 5px;
+      padding: 0 7px;
+    }
+    .chart-placeholder .bar {
+      height: 60%;
+      width: 12px;
+      background: #6271d4;
+      border-radius: 5px 5px 0 0;
+    }
+    .chart-placeholder .bar.a {height: 40%; background: #3aa4f9;}
+    .chart-placeholder .bar.b {height: 90%; background: #39d397;}
+    .chart-placeholder .bar.c {height: 70%; background: #fdab3d;}
+    /* Responsive */
+    @media (max-width: 900px) {
+      .cards-row { flex-direction: column; gap: 12px;}
+      .main-content { padding: 15px !important;}
+      .analytics-box { max-width: 100%; }
+    }
+  </style>
 </head>
 <body>
-
-<div class="sidebar">
-  <div class="logo">
-  <img src="ODCC.png" alt="ODCC Logo" style="max-width: 100%; max-height: 80px; display: block; margin: 0 auto; border-radius: 10px;">
+  <div class="sidebar">
+    <div class="logo">ODCC</div>
+    <nav>
+      <a href="main.html" class="active">Dash Board</a>
+      <a href="request.html">Request</a>
+      <a href="review.html">Review</a>
+      <a href="chat.html">Chat</a>
+      <a href="ai.html">AI</a>
+    </nav>
   </div>
-  <nav>
-    <a href="main.html" class="active">Dash Board</a>
-    <a href="request.html">Request</a>
-    <a href="review.html">Review</a>
-    <a href="chat.html">Chat</a>
-    <a href="ai.html">AI</a>
-  </nav>
-</div>
-
-<div class="main-content">
-  <div class="header">
-  <span class="header-title">Dash Board</span>
-    <div class="profile-icon" title="User Profile">
-    <svg viewBox="0 0 24 24"><path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2c-1.11 0-2-0.89-2-2s0.89-2 2-2 2 0.89 2 2-0.89 2-2 2z"/></svg>
-    </div>
-  </div>  
-
-  <div class="cards">
-    <div class="card">
-      <h3>Tasks Overview</h3>
-      <div class="bar-graph">
-        <div class="bar small"></div>
-        <div class="bar tall"></div>
+  <div class="main-content">
+    <div class="header">
+      <span>Accounting Dashboard</span>
+      <div class="profile-icon" title="User Profile">
+        <svg viewBox="0 0 24 24"><path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2c-1.11 0-2-0.89-2-2s0.89-2 2-2 2 0.89 2 2-0.89 2-2 2z"/></svg>
       </div>
     </div>
 
-    <div class="card">
-      <h3>Task Status</h3>
-      <div class="donut-graph"></div>
+    <div class="cards-row">
+      <div class="dashboard-card">
+        <h3>Total Balance</h3>
+        <div class="value">$48,350</div>
+        <div class="mini-chart">
+          <div class="bar" style="width:45%;"></div>
+          <div class="bar bar2" style="width:38%;"></div>
+          <div class="bar bar3" style="width:10%;"></div>
+        </div>
+        <span style="color:#39d397;font-weight:500;">+4.2% this month</span>
+      </div>
+      <div class="dashboard-card">
+        <h3>Receivables</h3>
+        <div class="value">$12,420</div>
+        <div class="mini-chart">
+          <div class="bar bar2" style="width:65%;"></div>
+          <div class="bar" style="width:22%;"></div>
+        </div>
+        <span style="color:#3aa4f9;font-weight:500;">+2 new clients</span>
+      </div>
+      <div class="dashboard-card">
+        <h3>Expenses</h3>
+        <div class="value">$6,340</div>
+        <div class="mini-chart">
+          <div class="bar bar3" style="width:60%;"></div>
+          <div class="bar bar2" style="width:12%;"></div>
+        </div>
+        <span style="color:#fdab3d;font-weight:500;">-1.8% this month</span>
+      </div>
+      <div class="dashboard-card">
+        <h3>Payables</h3>
+        <div class="value">$3,780</div>
+        <div class="mini-chart">
+          <div class="bar bar2" style="width:55%;"></div>
+        </div>
+        <span style="color:#3aa4f9;font-weight:500;">+1 upcoming</span>
+      </div>
     </div>
 
-    <div class="card">
-      <h3>Notifications</h3>
-      <div class="notifications">3 new alerts</div>
+    <div style="display:flex;gap:24px;flex-wrap:wrap;">
+      <div class="transactions-box" style="flex:2;">
+        <h3>Recent Transactions</h3>
+        <ul class="transactions-list">
+          <li><span>Client Payment</span> <span class="transaction-type inc">+$2,000</span></li>
+          <li><span>Office Supplies</span> <span class="transaction-type exp">-$90</span></li>
+          <li><span>Consulting Fee</span> <span class="transaction-type inc">+$500</span></li>
+          <li><span>Marketing</span> <span class="transaction-type exp">-$240</span></li>
+          <li><span>Subscription Renewed</span> <span class="transaction-type other">-$19</span></li>
+        </ul>
+      </div>
+      <div class="analytics-box" style="flex:1;">
+        <h3>Income/Expense Trend</h3>
+        <div class="chart-placeholder">
+          <div class="bar a" style="height:34%;"></div>
+          <div class="bar" style="height:75%;"></div>
+          <div class="bar b" style="height:90%;"></div>
+          <div class="bar c" style="height:55%;"></div>
+          <div class="bar a" style="height:42%;"></div>
+        </div>
+      </div>
     </div>
   </div>
-
-  <div class="recent">
-    <input type="text" placeholder="Recent Activities & Reports" readonly>
-  </div>
-</div>
-
 </body>
 </html>
