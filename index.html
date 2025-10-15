@@ -1,112 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ODCC - Login</title>
-<link rel="stylesheet" href="style.css" />
-<style>
-  /* Additional login page styles */
-  body {
-    background: #f0f2f5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  .login-container {
-    background: white;
-    padding: 40px 50px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    width: 320px;
-    text-align: center;
-  }
-  .login-container h2 {
-    margin-bottom: 25px;
-    color: #013a63;
-  }
-  .login-container label {
-    display: block;
-    text-align: left;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: #333;
-  }
-  .login-container input[type="text"],
-  .login-container input[type="password"] {
-    width: 100%;
-    padding: 10px 12px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    box-sizing: border-box;
-  }
-  .login-container input[type="text"]:focus,
-  .login-container input[type="password"]:focus {
-    border-color: #013a63;
-    outline: none;
-  }
-  .login-container button {
-    width: 100%;
-    padding: 12px;
-    font-size: 18px;
-    font-weight: bold;
-    background-color: #013a63;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  .login-container button:hover {
-    background-color: #025a9e;
-  }
-  .error-message {
-    color: red;
-    font-size: 14px;
-    margin-bottom: 12px;
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ODCC - Login</title>
+  <style>
+    body { background: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    .login-container { background: white; padding: 40px 50px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 320px; text-align: center;}
+    .toggle-btns { display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; }
+    .toggle-btns button { padding: 10px 24px; background: #013a63; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 16px; transition: background 0.3s;}
+    .toggle-btns button.active, .toggle-btns button:hover { background: #025a9e;}
+    .form-group { text-align: left; margin-bottom: 20px;}
+    .form-group label { font-weight: 600; color: #333;}
+    .form-group input { width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; margin-top: 8px;}
+    .form-group input:focus { border-color: #013a63; outline: none;}
+    .error-message { color: red; font-size: 14px; margin-bottom: 12px;}
+    .login-container button[type="submit"] { width: 100%; padding: 12px; font-size: 18px; font-weight: bold; background: #013a63; color: white; border: none; border-radius: 4px; margin-top: 10px;}
+    .login-container button[type="submit"]:hover { background: #025a9e;}
+  </style>
 </head>
 <body>
+  <div class="login-container">
+    <div class="toggle-btns">
+      <button id="signInBtn" class="active" onclick="showForm('signIn')">Sign In</button>
+      <button id="signUpBtn" onclick="showForm('signUp')">Sign Up</button>
+    </div>
+    <form id="signInForm" onsubmit="return validateLogin()">
+      <h2>Sign In to ODCC</h2>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required />
+      </div>
+      <div id="errorMsg" class="error-message"></div>
+      <button type="submit">Sign In</button>
+    </form>
 
-<div class="login-container">
-  <h2>Login to ODCC</h2>
-  <form id="loginForm" onsubmit="return validateLogin()">
-  <!-- form inputs here -->
-  <input type="text" id="username" name="username" required />
-  <input type="password" id="password" name="password" required />
-  <button type="submit">Log In</button>
-  </form>
-</div>
-
-<script>
-function validateLogin() {
-  const username = document.getElementById('username').value.trim();
-  const password = document.getElementById('password').value.trim();
-  const errorMsg = document.getElementById('errorMsg');
-
-  const validUsername = 'admin';
-  const validPassword = '1234';
-
-  if (username === validUsername && password === validPassword) {
-    alert('Login successful!');
-    // Redirect to main page after successful login
-    window.location.href = 'main.html';
-    return false;  // Prevent actual form submission
-  } else {
-    errorMsg.textContent = 'Invalid username or password. Please try again.';
-    return false;  // Prevent form submission
-  }
-}
-</script>
-
+    <form id="signUpForm" style="display:none;" onsubmit="return validateSignUp()">
+      <h2>Sign Up for ODCC</h2>
+      <div class="form-group">
+        <label for="newUsername">Username</label>
+        <input type="text" id="newUsername" name="newUsername" required />
+      </div>
+      <div class="form-group">
+        <label for="newPassword">Password</label>
+        <input type="password" id="newPassword" name="newPassword" required />
+      </div>
+      <div id="signupMsg" class="error-message"></div>
+      <button type="submit">Sign Up</button>
+    </form>
+  </div>
+  <script>
+    function showForm(form) {
+      document.getElementById('signInForm').style.display = form === 'signIn' ? 'block' : 'none';
+      document.getElementById('signUpForm').style.display = form === 'signUp' ? 'block' : 'none';
+      document.getElementById('signInBtn').classList.toggle('active', form === 'signIn');
+      document.getElementById('signUpBtn').classList.toggle('active', form === 'signUp');
+    }
+    function validateLogin() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const errorMsg = document.getElementById('errorMsg');
+      if (username === 'admin' && password === '1234') {
+        window.location.href = 'main.html'; // Redirect to dashboard
+        return false;
+      } else {
+        errorMsg.textContent = 'Invalid username or password. Please try again.';
+        return false;
+      }
+    }
+    function validateSignUp() {
+      const newUsername = document.getElementById('newUsername').value.trim();
+      const newPassword = document.getElementById('newPassword').value.trim();
+      const signupMsg = document.getElementById('signupMsg');
+      if (newUsername.length < 3 || newPassword.length < 4) {
+        signupMsg.textContent = 'Username or password too short.';
+        return false;
+      }
+      signupMsg.textContent = 'Sign-up successful! Now you can sign in.'; // Replace with your registration logic
+      return false;
+    }
+  </script>
 </body>
-
-
-
 </html>
