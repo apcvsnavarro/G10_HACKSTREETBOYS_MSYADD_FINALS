@@ -8,122 +8,61 @@
   <style>
     .chat-layout { display: flex; width: 100%; height: 75vh; max-width: 1300px; margin: 0 auto; }
     .chat-people-list {
-      width: 250px;
-      background: #e0eaff;
-      border-radius: 32px;
-      padding: 24px 12px;
-      margin-right: 32px;
-      box-shadow: 0 8px 35px rgb(57 71 168 / 10%);
+      width: 250px; background: #e0eaff; border-radius: 32px; padding: 24px 12px; margin-right: 32px;
+      box-shadow: 0 8px 35px rgb(57 71 168 / 10%); flex-direction: column; gap: 12px; min-width: 180px;
       display: flex;
-      flex-direction: column;
-      gap: 12px;
-      height: 100%;
-      min-width: 180px;
     }
     .chat-person {
-      background: white;
-      color: #39408a;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      border-radius: 16px;
-      padding: 12px 16px;
-      cursor: pointer;
-      transition: background 0.2s;
-      font-weight: 700;
-      border: 2px solid transparent;
+      background: white; color: #39408a; display: flex; align-items: center; gap: 10px; border-radius: 16px;
+      padding: 10px 13px; cursor: pointer; transition: background 0.2s; font-weight: 700; border: 2px solid transparent;
       box-shadow: 0 2px 8px #bcc7f373;
     }
     .chat-person.selected, .chat-person:hover {
-      background: #6271d4;
-      color: white;
-      border: 2px solid #39408a;
+      background: #6271d4; color: white; border: 2px solid #39408a;
     }
     .avatar {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: #dbeafe;
-      color: #39408a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 17px;
-      font-weight: bold;
+      width: 36px; height: 36px; border-radius: 50%; background: #dbeafe; color: #39408a; display: flex;
+      align-items: center; justify-content: center; font-size: 16px; font-weight: bold;
     }
     .chat-content-area { flex: 1; display: flex; flex-direction: column; }
+    .chat-header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .chat-search { padding: 9px 15px; border-radius: 12px; border: 2px solid #bcc7f3; font-size: 15px; width: 220px; color: #39408a;}
     .chat-history {
-      flex: 1;
-      overflow-y: auto;
-      background: #f4f6fe;
-      border-radius: 20px;
-      border: 2px solid #bcc7f3;
-      padding: 24px 28px;
-      margin-bottom: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      min-height: 320px;
+      flex: 1; overflow-y: auto; background: #f4f6fe; border-radius: 20px; border: 2px solid #bcc7f3; padding: 24px 28px;
+      margin-bottom: 20px; display: flex; flex-direction: column; gap: 16px; min-height: 320px;
     }
     .msg-bubble {
       max-width: 64%;
-      padding: 15px 22px;
+      padding: 16px 21px;
       border-radius: 15px;
-      font-size: 16px;
+      font-size: 15px;
       position: relative;
       margin-bottom: 2px;
       white-space: pre-line;
+      box-shadow: 0 2px 6px #bcc7f373;
     }
     .msg.user { background: #39408a; color: white; align-self: flex-end; }
     .msg.other { background: #dbeafe; color: #39408a; align-self: flex-start; }
-    .msg-timestamp {
-      font-size: 11px;
-      color: #6271d4;
-      margin-top: 2px;
-      text-align: right;
-    }
+    .msg-timestamp { font-size: 11px; color: #6271d4; margin-top: 2px; text-align: right; }
+    .typing-indicator { font-size: 14px; color: #6271d4; margin-left: 3px; margin-bottom: -8px; }
     .chat-features-row {
-      display: flex;
-      gap: 16px;
-      margin-bottom: 8px;
+      display: flex; gap: 16px; margin-bottom: 8px;
     }
     .feature-btn {
-      background: #39408a;
-      color: white;
-      padding: 10px 22px;
-      border-radius: 17px;
-      border: none;
-      font-weight: 800;
-      font-size: 15px;
-      cursor: pointer;
-      transition: background 0.2s;
+      background: #39408a; color: white; padding: 10px 22px; border-radius: 17px; border: none; font-weight: 800;
+      font-size: 15px; cursor: pointer; transition: background 0.2s;
     }
     .feature-btn:hover { background: #6271d4; }
     .chat-input-row {
-      display: flex;
-      gap: 14px;
-      margin-bottom: 2px;
+      display: flex; gap: 14px; margin-bottom: 2px;
     }
     .chat-input {
-      flex: 1;
-      border-radius: 13px;
-      border: 2px solid #bcc7f3;
-      padding: 11px 17px;
-      font-size: 16px;
-      font-family: Arial, sans-serif;
-      color: #39408a;
-      resize: none;
+      flex: 1; border-radius: 13px; border: 2px solid #bcc7f3; padding: 11px 17px; font-size: 16px;
+      font-family: Arial, sans-serif; color: #39408a; resize: none;
     }
     .send-btn {
-      background: #39408a;
-      color: white;
-      padding: 11px 28px;
-      border-radius: 13px;
-      font-weight: 800;
-      font-size: 17px;
-      border: none;
-      cursor: pointer;
-      transition: background 0.2s;
+      background: #39408a; color: white; padding: 11px 28px; border-radius: 13px; font-weight: 800;
+      font-size: 17px; border: none; cursor: pointer; transition: background 0.2s;
     }
     .send-btn:hover { background: #6271d4; }
   </style>
@@ -151,7 +90,12 @@
     <div class="chat-layout">
       <div class="chat-people-list" id="usersList"></div>
       <div class="chat-content-area">
+        <div class="chat-header-top">
+          <span id="recipientName" style="font-weight:700; font-size:18px; color:#39408a;"></span>
+          <input class="chat-search" id="chatSearch" type="text" placeholder="Search messages...">
+        </div>
         <div class="chat-history" id="chatHistory"></div>
+        <span class="typing-indicator" id="typingIndicator"></span>
         <div class="chat-features-row">
           <button class="feature-btn" id="exportBtn">Export Chat</button>
           <button class="feature-btn" id="voiceBtn">🎙️ Voice Input</button>
@@ -164,7 +108,6 @@
     </div>
   </div>
   <script>
-    // Example users and basic avatars
     const users = [
       {id: 'grace', name: 'Grace Oroceo', initial: 'G'},
       {id: 'shaira', name: 'Shaira Distura', initial: 'S'},
@@ -173,8 +116,7 @@
     ];
     let selectedUserId = 'grace';
 
-    // Chat with each recipient is stored as {recipientId: [messages]}
-    // "user": your outgoing message, "other": their reply
+    // Each user's chat is a separate message array
     let chatDB = {
       grace: [
         {from: 'other', text: 'Welcome to the ODCC chat.', timestamp: new Date().toLocaleTimeString()},
@@ -185,11 +127,14 @@
     };
 
     const usersList = document.getElementById('usersList');
+    const recipientName = document.getElementById('recipientName');
     const chatHistory = document.getElementById('chatHistory');
     const chatInput = document.getElementById('chatInput');
     const sendBtn = document.getElementById('sendBtn');
     const exportBtn = document.getElementById('exportBtn');
     const voiceBtn = document.getElementById('voiceBtn');
+    const chatSearch = document.getElementById('chatSearch');
+    const typingIndicator = document.getElementById('typingIndicator');
 
     function renderUsers() {
       usersList.innerHTML = '';
@@ -208,7 +153,14 @@
 
     function renderChat() {
       chatHistory.innerHTML = '';
-      (chatDB[selectedUserId] || []).forEach(msg => {
+      recipientName.textContent = users.find(u=>u.id===selectedUserId).name;
+      typingIndicator.textContent = '';
+      let filteredMsgs = (chatDB[selectedUserId] || []);
+      const searchTxt = chatSearch.value.toLowerCase();
+      if (searchTxt) {
+        filteredMsgs = filteredMsgs.filter(m => m.text.toLowerCase().includes(searchTxt));
+      }
+      filteredMsgs.forEach(msg => {
         const bubble = document.createElement('div');
         bubble.className = 'msg-bubble ' + (msg.from === 'user' ? 'user' : 'other');
         bubble.textContent = msg.text;
@@ -228,11 +180,12 @@
       chatDB[selectedUserId].push({from: 'user', text: txt, timestamp: new Date().toLocaleTimeString()});
       chatInput.value = '';
       renderChat();
-      // Demo: only auto reply from other side, not push "user" messages into recipient history.
+      typingIndicator.textContent = users.find(u=>u.id===selectedUserId).name + ' is typing...';
       setTimeout(() => {
         chatDB[selectedUserId].push({from: 'other', text: 'Received: ' + txt, timestamp: new Date().toLocaleTimeString()});
         renderChat();
-      }, 900);
+        typingIndicator.textContent = '';
+      }, 1000);
     };
     chatInput.addEventListener('keypress', e => {
       if (e.key === 'Enter' && !e.shiftKey) {
@@ -254,6 +207,7 @@
     voiceBtn.onclick = function () {
       alert('Voice input feature coming soon!');
     };
+    chatSearch.oninput = function () { renderChat(); };
 
     renderUsers();
     renderChat();
