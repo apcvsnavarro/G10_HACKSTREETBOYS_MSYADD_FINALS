@@ -210,12 +210,9 @@
     };
 
     function showContent(serviceKey) {
-      // Update buttons active state
       document.querySelectorAll('.quick-link').forEach(btn => {
         btn.classList.toggle('active', btn.textContent.replace(/\s+/g, '') === serviceKey);
       });
-
-      // Update content section
       const service = services[serviceKey];
       if (service) {
         document.getElementById('service-content').innerHTML = `<h1>${service.title}</h1>${service.content}`;
