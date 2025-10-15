@@ -13,8 +13,8 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
+      min-height: 98vh;
       position: relative;
-      min-height: 90vh;
     }
     .profile-icon {
       position: absolute;
@@ -35,29 +35,31 @@
       fill: #39408a;
     }
     .chat-container {
-      width: 900px;
+      width: 1050px;
       background: white;
       border-radius: 26px;
-      padding: 30px 38px;
+      padding: 36px 44px;
       box-shadow: 0 12px 25px rgba(0, 0, 0, 0.06);
       display: flex;
       flex-direction: column;
-      gap: 20px;
-      max-height: 85vh;
-      overflow: hidden;
+      gap: 18px;
+      min-height: 86vh;
+      max-height: 96vh;
     }
     .chat-header {
-      font-size: 28px;
+      font-size: 32px;
       font-weight: 900;
       color: #1a2340;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
     .chat-history {
       flex: 1;
+      min-height: 450px;
+      max-height: 70vh;
       overflow-y: auto;
       border: 2px solid #bcc7f3;
       border-radius: 20px;
-      padding: 18px 26px;
+      padding: 20px 28px;
       background: #f4f6fe;
       display: flex;
       flex-direction: column;
@@ -99,6 +101,7 @@
       display: flex;
       gap: 16px;
       flex-wrap: wrap;
+      margin-bottom: 7px;
     }
     .feature-btn {
       padding: 14px 20px;
@@ -116,19 +119,22 @@
     }
     .ai-input-row {
       display: flex;
-      gap: 16px;
-      flex: 1 1 300px;
+      gap: 14px;
       width: 100%;
+      min-height: 44px;
+      max-height: 54px;
+      align-items: center;
     }
     .ai-input {
       flex: 1;
-      padding: 12px 22px;
-      border-radius: 20px;
+      padding: 9px 18px;
+      border-radius: 13px;
       border: 2px solid #bcc7f3;
       font-size: 16px;
       font-family: Arial, sans-serif;
       color: #39408a;
       transition: border-color 0.3s, box-shadow 0.3s;
+      height: 38px;
     }
     .ai-input:focus {
       border-color: #6271d4;
@@ -138,28 +144,28 @@
     .ai-send-btn, .ai-export-btn {
       background-color: #39408a;
       color: white;
-      padding: 16px 28px;
-      border-radius: 20px;
+      padding: 8px 23px;
+      border-radius: 13px;
       font-weight: 800;
       font-size: 17px;
       border: none;
       cursor: pointer;
       transition: background-color 0.3s;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .ai-send-btn:hover, .ai-export-btn:hover {
       background-color: #6271d4;
     }
-    @media (max-width: 850px) {
+    @media (max-width: 1150px) {
       .chat-container {
-        width: 90%;
+        width: 98%;
+        padding: 12px 5vw;
       }
-      .chat-controls {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .chat-input-group {
-        width: 100%;
-      }
+      .chat-header { font-size: 26px; }
+      .chat-history { min-height: 230px; max-height: 50vh; padding: 10px; }
     }
   </style>
 </head>
