@@ -1,61 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ODCC Review</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
-    body { margin: 0; font-family: Arial, sans-serif; display: flex; height: 100vh; background-color: #f0f3ff; }
-    .sidebar {
-      width: 200px; background-color: #6271d4; color: white;
-      display: flex; flex-direction: column; padding: 20px 10px;
+    .review-container { display: flex; flex-direction: column; gap: 28px; }
+    .reviews-section {
+      background: #e0eaff;
+      border-radius: 26px;
+      padding: 32px 36px;
+      min-width: 400px;
+      box-shadow: 0 12px 25px rgba(0,0,0,0.06);
     }
-    .logo {
-      background-color: white; border-radius: 10px; padding: 5px 15px;
-      color: #39408a; font-weight: bold; font-size: 18px;
-      text-align: center; margin-bottom: 40px; user-select: none;
+    .reviews-header { font-weight: 900; font-size: 24px; color: #1a2340; margin-bottom: 20px; }
+    .review-filter { display: flex; gap: 12px; margin-bottom: 18px; }
+    .filter-btn {
+      padding: 10px 18px;
+      font-weight: 800;
+      font-size: 14px;
+      color: #39408a;
+      border-radius: 14px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      background: white;
+      transition: 0.3s all;
     }
-    .sidebar nav a {
-      color: #c2c8ff; text-decoration: none; padding: 12px 10px;
-      display: block; border-radius: 4px; margin-bottom: 10px; font-weight: 600;
+    .filter-btn.active, .filter-btn:hover { border-color: #6271d4; background: #eef4ff; color: #39408a; }
+    .review-search { width: 100%; padding: 10px 16px; border-radius: 12px; border: 2px solid #bcc7f3; font-size: 15px; margin-bottom: 20px; box-sizing: border-box; }
+    .review-card {
+      background: white;
+      padding: 18px 24px;
+      border-radius: 16px;
+      margin-bottom: 22px;
+      border-left: 5px solid #6271d4;
+      box-shadow: 0 6px 20px rgb(57 64 138 / 12%);
+      transition: transform 0.2s;
+      color: #39408a;
     }
-    .sidebar nav a.active, .sidebar nav a:hover {
-      background-color: #39408a; color: white;
+    .review-card:hover { transform: translateX(4px);}
+    .review-title {font-size: 18px; font-weight: 700; margin-bottom: 6px;}
+    .review-description {font-size: 14px; color: #344080; margin-bottom: 7px;}
+    .review-meta { font-size: 13px; color: #6271d4; margin-bottom: 7px;}
+    .review-status {
+      font-weight: 700; font-size: 12px; padding: 6px 14px; border-radius: 20px; display: inline-block;
+      margin-right: 10px;
     }
-    .main-content {
-      flex: 1; padding: 30px; background-color: #f0f3ff;
-      display: flex; flex-direction: column; position: relative;
-    }
-    .profile-icon {
-      position: absolute; top: 15px; right: 20px;
-      width: 32px; height: 32px; border: 2px solid #39408a;
-      border-radius: 50%; box-sizing: border-box; cursor: pointer;
-    }
-    .profile-icon svg {
-      display: block; margin: 4px auto; width: 20px; height: 20px; fill: #39408a;
-    }
-    .review-box {
-      background: white; border-radius: 15px; padding: 25px; box-shadow: 0 4px 8px rgba(0,0,0,0.03);
-      max-width: 450px; margin: auto;
-    }
-    .review-table {
-      width: 100%; border-collapse: collapse; margin-bottom: 10px;
-    }
-    .review-table th, .review-table td {
-      text-align: left; padding: 8px; border-bottom: 1px solid #ececec;
-    }
-    .review-table th {
-      font-weight: 700;
-    }
+    .status-approved { background: #e6fff3; color: #2d7a54; }
+    .status-pending { background: #fff4e6; color: #f1ae5a; }
+    .status-rejected { background: #ffe6e6; color: #ff6b6b; }
   </style>
 </head>
 <body>
   <div class="sidebar">
     <div class="logo">
-    <img src="ODCC.png" alt="ODCC Logo" style="max-width: 100%; max-height: 80px; display: block; margin: 0 auto; border-radius: 10px;">
+      <img src="ODCC.png" alt="ODCC Logo" style="max-width: 100%; max-height: 80px; display: block; margin: 0 auto; border-radius: 10px;">
     </div>
     <nav>
-      <a href="main.html">Dash Board</a>
+      <a href="main.html">Dashboard</a>
       <a href="request.html">Request</a>
       <a href="review.html" class="active">Review</a>
       <a href="chat.html">Chat</a>
@@ -63,38 +66,81 @@
     </nav>
   </div>
   <div class="main-content">
-    <div class="profile-icon" title="User Profile">
-      <svg viewBox="0 0 24 24"><path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2c-1.11 0-2-0.89-2-2s0.89-2 2 2 2 0.89 2 2-0.89 2-2 2z"/></svg>
+    <div class="header">
+      <span>Review Management</span>
+      <div class="profile-icon" title="User Profile">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2c-1.11 0-2-0.89-2-2s0.89-2 2-2 2 0.89 2 2-0.89 2-2 2z"/>
+        </svg>
+      </div>
     </div>
-    <div class="review-box">
-      <h3 style="margin-bottom:20px; font-weight:700;">Review Requests</h3>
-      <table class="review-table">
-        <thead>
-          <tr>
-            <th>Request ID</th>
-            <th>Title</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>#1</td>
-            <td>System Update</td>
-            <td>Pending</td>
-          </tr>
-          <tr>
-            <td>#2</td>
-            <td>New Feature</td>
-            <td>Completed</td>
-          </tr>
-          <tr>
-            <td>#3</td>
-            <td>Bug Fix</td>
-            <td>In Progress</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="review-container">
+      <div class="reviews-section">
+        <div class="reviews-header">My Reviews</div>
+        <div class="review-filter" id="filterBtns">
+          <button class="filter-btn active" data-status="all">All</button>
+          <button class="filter-btn" data-status="Pending">Pending</button>
+          <button class="filter-btn" data-status="Approved">Approved</button>
+          <button class="filter-btn" data-status="Rejected">Rejected</button>
+        </div>
+        <input type="text" class="review-search" id="reviewSearch" placeholder="Search reviews..."/>
+        <div id="reviewCards"></div>
+      </div>
     </div>
   </div>
+  <script>
+    // Demo data
+    let reviews = [
+      {title: "Quarterly Report", description: "Review Q3 financials.", meta: "by Sharon D.", status: "Approved"},
+      {title: "Invoice 4253", description: "Check attached invoice for accuracy.", meta: "by Carlos E.", status: "Pending"},
+      {title: "Expense Statement", description: "Review client travel expenses.", meta: "by Dennis N.", status: "Rejected"}
+    ];
+
+    const reviewCardsContainer = document.getElementById('reviewCards');
+    const filterBtns = document.getElementById('filterBtns').children;
+    const reviewSearch = document.getElementById('reviewSearch');
+
+    function renderReviews(filter = 'all', search = '') {
+      reviewCardsContainer.innerHTML = '';
+      const filtered = reviews.filter(r =>
+        (filter === 'all' || r.status === filter) &&
+        (r.title.toLowerCase().includes(search.toLowerCase()) ||
+         r.description.toLowerCase().includes(search.toLowerCase()) ||
+         r.meta.toLowerCase().includes(search.toLowerCase()))
+      );
+      if (!filtered.length) {
+        reviewCardsContainer.innerHTML = '<p>No reviews found.</p>';
+        return;
+      }
+      filtered.forEach(r => {
+        const statClass = {
+          Approved: 'status-approved',
+          Pending: 'status-pending',
+          Rejected: 'status-rejected'
+        }[r.status] || 'status-pending';
+        reviewCardsContainer.innerHTML += `
+          <div class="review-card">
+            <div class="review-title">${r.title}</div>
+            <div class="review-description">${r.description}</div>
+            <div class="review-meta">${r.meta}</div>
+            <span class="review-status ${statClass}">${r.status}</span>
+          </div>
+        `;
+      });
+    }
+    Array.from(filterBtns).forEach(btn => {
+      btn.addEventListener('click', () => {
+        for (let b of filterBtns) b.classList.remove('active');
+        btn.classList.add('active');
+        renderReviews(btn.dataset.status, reviewSearch.value);
+      });
+    });
+    reviewSearch.addEventListener('input', () => {
+      const activeBtn = document.querySelector('.filter-btn.active');
+      const filter = activeBtn ? activeBtn.dataset.status : 'all';
+      renderReviews(filter, reviewSearch.value);
+    });
+    renderReviews();
+  </script>
 </body>
 </html>
