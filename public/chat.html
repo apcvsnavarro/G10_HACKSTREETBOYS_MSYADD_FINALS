@@ -134,6 +134,53 @@
     </div>
   </div>
   <script>
+    // javascript
+    const chatForm = document.querySelector('.chat-form');
+const chatInput = document.querySelector('.chat-input');
+const chatMessagesContainer = document.querySelector('.chat-messages');
+
+function addChatBubble(user, message, isUser = false) {
+  const bubble = document.createElement('div');
+  bubble.classList.add('chat-bubble');
+  if (isUser) bubble.classList.add('user');
+  bubble.textContent = `${user}: ${message}`;
+  chatMessagesContainer.appendChild(bubble);
+  chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
+}
+
+// Load existing chat messages
+function loadChatMessages() {
+  fetch('/api/chat')
+  .then(res => res.json())
+  .then(messages => {
+    chatMessagesContainer.innerHTML = '';
+    messages.forEach(msg => addChatBubble(msg.user, msg.message, msg.user === 'You'));
+  })
+  .catch(console.error);
+}
+
+chatForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const message = chatInput.value.trim();
+  if (!message) return;
+
+  fetch('/api/chat', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({user: 'You', message})
+  })
+  .then(res => res.json())
+  .then(data => {
+    addChatBubble('You', message, true);
+    chatInput.value = '';
+  })
+  .catch(console.error);
+});
+
+// Initial load
+loadChatMessages();
+
     // Demo messages
     const messages = [
       {sender: "user", text: "Hello team!"},
@@ -167,5 +214,6 @@
     });
     renderChat();
   </script>
+  <script src="js/script.js"></script>
 </body>
 </html>
