@@ -3,7 +3,6 @@ const requestForm = document.getElementById('requestForm');
 if (requestForm) {
   requestForm.addEventListener('submit', function(e) {
     e.preventDefault();
-
     const title = document.getElementById('titleInput').value.trim();
     const description = document.getElementById('descriptionInput').value.trim();
 
