@@ -5,10 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ODCC Request</title>
   <link rel="stylesheet" href="style.css" />
+
 </head>
 <body>
   <div class="sidebar">
-    <div class="logo"><img src="ODCC.png" alt="ODCC Logo" /></div>
+    <div class="logo">
+      <img src="ODCC.png" alt="ODCC Logo" />
+    </div>
     <nav>
       <a href="main.html">Dashboard</a>
       <a href="request.html" class="active">Request</a>
@@ -17,23 +20,140 @@
       <a href="ai.html">AI</a>
     </nav>
   </div>
-
+  
   <div class="main-content">
-    <div class="header">Request Management</div>
+    <div class="header">
+      <span>Request Management</span>
+        <div class="profile-icon" title="User Profile">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 12c2.67 0 8 1.34 8 4v4H4v-4c0-2.66 5.33-4 8-4zm0-2c-1.11 0-2-0.89-2-2s0.89-2 2-2 2 0.89 2 2-0.89 2-2 2z"/>
+          </svg>
+        </div>
+      </div>
+
+
     <div class="request-container">
       <section class="request-form">
         <h3>Submit New Request</h3>
         <form id="requestForm">
           <label for="titleInput">Request Title</label>
           <input id="titleInput" name="title" type="text" placeholder="Request title" required />
+
           <label for="descriptionInput">Description</label>
           <textarea id="descriptionInput" name="description" rows="4" placeholder="Describe your request" required maxlength="500"></textarea>
-          <button type="submit">Submit</button>
+          <div id="charCount" style="text-align:right; font-size:13px; color:#6271d4;">0/500</div>
+
+          <button type="submit" class="send-btn">Send Request</button>
         </form>
+      </section>
+
+      <section class="request-list">
+        <h3>My Requests</h3>
+
+        <div class="request-filter" id="filterButtons">
+          <button class="filter-btn active" data-status="all">All</button>
+          <button class="filter-btn" data-status="Pending">Pending</button>
+          <button class="filter-btn" data-status="In Progress">In Progress</button>
+          <button class="filter-btn" data-status="Completed">Completed</button>
+        </div>
+
+        <input type="text" placeholder="Search requests..." id="searchInput" class="search-input" />
+
+        <div id="requestCards">
+          <!-- Requests will be appended here dynamically -->
+        </div>
       </section>
     </div>
   </div>
 
+  <script>
+    // Character counter for description
+    const descriptionInput = document.getElementById('descriptionInput');
+    const charCount = document.getElementById('charCount');
+    descriptionInput.addEventListener('input', () => {
+      charCount.textContent = descriptionInput.value.length + '/500';
+    });
+
+    // Sample request data for demo
+    let requests = [
+      { title: 'System Update', description: 'Update server software', status: 'Pending' },
+      { title: 'New Feature', description: 'Add chat filters', status: 'In Progress' }
+    ];
+
+    const requestCardsContainer = document.getElementById('requestCards');
+    const filterButtons = document.getElementById('filterButtons').children;
+    const searchInput = document.getElementById('searchInput');
+
+    // Function to render requests based on filter and search
+    function renderRequests(filter = 'all', search = '') {
+      requestCardsContainer.innerHTML = '';
+      const filtered = requests.filter(r => {
+        const matchesStatus = filter === 'all' || r.status === filter;
+        const matchesSearch = r.title.toLowerCase().includes(search.toLowerCase()) || r.description.toLowerCase().includes(search.toLowerCase());
+        return matchesStatus && matchesSearch;
+      });
+
+      if(filtered.length < 1) {
+        requestCardsContainer.innerHTML = '<p>No requests found.</p>';
+        return;
+      }
+
+      filtered.forEach(req => {
+        const card = document.createElement('div');
+        card.className = 'request-card';
+
+        const statusClass = {
+          'Pending': 'status-pending',
+          'In Progress': 'status-in-progress',
+          'Completed': 'status-completed'
+        }[req.status] || 'status-pending';
+
+        card.innerHTML = `
+          <div class="request-title">${req.title}</div>
+          <div class="request-description">${req.description}</div>
+          <span class="request-status ${statusClass}">${req.status}</span>
+        `;
+
+        requestCardsContainer.appendChild(card);
+      });
+    }
+
+    // Filter buttons event
+    Array.from(filterButtons).forEach(btn => {
+      btn.addEventListener('click', () => {
+        for(let b of filterButtons) b.classList.remove('active');
+        btn.classList.add('active');
+        renderRequests(btn.dataset.status, searchInput.value);
+      });
+    });
+
+    // Search input event
+    searchInput.addEventListener('input', () => {
+      const activeBtn = document.querySelector('.filter-btn.active');
+      const filter = activeBtn ? activeBtn.dataset.status : 'all';
+      renderRequests(filter, searchInput.value);
+    });
+
+    // Form submission event
+    document.getElementById('requestForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const title = e.target.title.value.trim();
+      const description = e.target.description.value.trim();
+
+      if(title && description) {
+        requests.push({ title, description, status: 'Pending' });
+        e.target.reset();
+        charCount.textContent = '0/500';
+        renderRequests(); // show updated list
+        alert('Request submitted successfully!');
+      } else {
+        alert('Please fill in all required fields.');
+      }
+    });
+
+    // Initial render
+    renderRequests();
+  </script>
   <script src="js/main.js"></script>
 </body>
 </html>
