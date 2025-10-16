@@ -67,6 +67,35 @@
   </div>
 
   <script>
+    // javascript
+    document.getElementById('requestForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const title = document.getElementById('titleInput').value.trim();
+  const description = document.getElementById('descriptionInput').value.trim();
+
+  if (!title || !description) {
+    alert('Please fill in both title and description.');
+    return;
+  }
+
+  fetch('/api/request', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title, description })
+  })
+  .then(response => response.json())
+  .then(data => {
+    alert('Request submitted successfully!');
+    this.reset();
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert('Failed to submit request');
+  });
+});
+
+    // javascript
     // Character counter for description
     const descriptionInput = document.getElementById('descriptionInput');
     const charCount = document.getElementById('charCount');
