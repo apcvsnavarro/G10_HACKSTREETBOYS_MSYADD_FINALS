@@ -1,51 +1,78 @@
-const express = require('express');
-const path = require('path');
-const app = express();
-const port = 3000;
+// Request page logic
+const requestForm = document.getElementById('requestForm');
+if (requestForm) {
+  requestForm.addEventListener('submit', function(e) {
+    e.preventDefault();
 
-// Middleware to parse JSON bodies
-app.use(express.json());
+    const title = document.getElementById('titleInput').value.trim();
+    const description = document.getElementById('descriptionInput').value.trim();
 
-// Serve frontend static files
-app.use(express.static(path.join(__dirname, 'public')));
+    if (!title || !description) {
+      alert('Please fill in both title and description.');
+      return;
+    }
 
-// Sample in-memory storage for requests and chat
-let requests = [];
-let chatMessages = [];
+    fetch('/api/request', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title, description }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        alert('Request submitted successfully!');
+        requestForm.reset();
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to submit request.');
+      });
+  });
+}
 
-// API to submit a request
-app.post('/api/request', (req, res) => {
-  const { title, description } = req.body;
-  if (!title || !description) {
-    return res.status(400).json({ error: 'Title and description required' });
+// Chat page logic
+const chatForm = document.querySelector('.chat-form');
+const chatInput = document.querySelector('.chat-input');
+const chatMessagesContainer = document.querySelector('.chat-messages');
+
+if (chatForm && chatInput && chatMessagesContainer) {
+  function addChatBubble(user, message, isUser = false) {
+    const bubble = document.createElement('div');
+    bubble.classList.add('chat-bubble');
+    if (isUser) bubble.classList.add('user');
+    bubble.textContent = `${user}: ${message}`;
+    chatMessagesContainer.appendChild(bubble);
+    chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
   }
-  const newRequest = { id: requests.length + 1, title, description };
-  requests.push(newRequest);
-  res.json({ message: 'Request submitted', request: newRequest });
-});
 
-// API to get all requests
-app.get('/api/request', (req, res) => {
-  res.json(requests);
-});
-
-// API to send chat message
-app.post('/api/chat', (req, res) => {
-  const { user, message } = req.body;
-  if (!user || !message) {
-    return res.status(400).json({ error: 'User and message required' });
+  function loadChatMessages() {
+    fetch('/api/chat')
+      .then(res => res.json())
+      .then(messages => {
+        chatMessagesContainer.innerHTML = '';
+        messages.forEach(msg => addChatBubble(msg.user, msg.message, msg.user === 'You'));
+      })
+      .catch(console.error);
   }
-  const newMessage = { id: chatMessages.length + 1, user, message };
-  chatMessages.push(newMessage);
-  res.json({ message: 'Chat message sent', chat: newMessage });
-});
 
-// API to get chat messages
-app.get('/api/chat', (req, res) => {
-  res.json(chatMessages);
-});
+  chatForm.addEventListener('submit', function(e) {
+    e.preventDefault();
 
-// Start server
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
-});
+    const message = chatInput.value.trim();
+    if (!message) return;
+
+    fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user: 'You', message }),
+    })
+      .then(res => res.json())
+      .then(() => {
+        addChatBubble('You', message, true);
+        chatInput.value = '';
+      })
+      .catch(console.error);
+  });
+
+  // Load existing chat messages on page load
+  loadChatMessages();
+}
