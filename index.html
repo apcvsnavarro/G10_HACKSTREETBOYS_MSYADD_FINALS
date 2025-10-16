@@ -194,7 +194,7 @@
       const password = document.getElementById('password').value.trim();
       const errorMsg = document.getElementById('errorMsg');
       if (username === 'admin' && password === '1234') {
-        window.location.href = 'main.html'; // Redirect on successful login
+        window.location.href = 'public/main.html'; // Redirect on successful login
         return false;
       } else {
         errorMsg.textContent = 'Invalid username or password. Please try again.';
