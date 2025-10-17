@@ -3,17 +3,22 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
-// Parse JSON bodies
+// Middleware
 app.use(express.json());
-
-// Serve static files from /public
 app.use(express.static(path.join(__dirname, 'public')));
 
-// In-memory storage
+// In-memory data storage
 let requests = [];
 let chatMessages = [];
 
-// Request API
+// ----- REST API: Requests -----
+
+// Get all requests
+app.get('/api/request', (req, res) => {
+  res.json(requests);
+});
+
+// Create a new request
 app.post('/api/request', (req, res) => {
   const { title, description } = req.body;
   if (!title || !description) {
@@ -24,11 +29,14 @@ app.post('/api/request', (req, res) => {
   res.json({ message: 'Request submitted', request: newRequest });
 });
 
-app.get('/api/request', (req, res) => {
-  res.json(requests);
+// ----- REST API: Chat -----
+
+// Get chat messages
+app.get('/api/chat', (req, res) => {
+  res.json(chatMessages);
 });
 
-// Chat API
+// Add a chat message
 app.post('/api/chat', (req, res) => {
   const { user, message } = req.body;
   if (!user || !message) {
@@ -37,10 +45,6 @@ app.post('/api/chat', (req, res) => {
   const newMessage = { id: chatMessages.length + 1, user, message };
   chatMessages.push(newMessage);
   res.json({ message: 'Chat message sent', chat: newMessage });
-});
-
-app.get('/api/chat', (req, res) => {
-  res.json(chatMessages);
 });
 
 // Start server

@@ -1,4 +1,6 @@
-// Request page logic
+console.log("main.js is loaded and running");
+
+// ----- Request Page Logic -----
 const requestForm = document.getElementById('requestForm');
 if (requestForm) {
   requestForm.addEventListener('submit', function(e) {
